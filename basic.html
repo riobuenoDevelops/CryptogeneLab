@@ -1,0 +1,160 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Web-XR-Gallery</title>
+  <meta name="description" content="Web-XR-Gallery">
+
+  <!-- <script src="super/build.js"></script> -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+  <!-- RayCast -->
+  <!-- <script src="js/raycast.component.js"></script> -->
+
+
+
+</head>
+
+<body>
+  <a-scene networked-scene="
+      room: dev;
+      debug: true;
+      adapter: easyrtc;
+    ">
+    <a-assets>
+
+      <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
+      <img id="sky" src="https://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+
+
+
+
+      <!-- Templates -->
+
+      <!-- Avatar -->
+      <template id="avatar-template">
+        <a-entity class="avatar">
+          <a-sphere class="head" scale="0.45 0.5 0.4"></a-sphere>
+          <a-entity class="face" position="0 0.05 0">
+            <a-sphere class="eye" color="#efefef" position="0.16 0.1 -0.35" scale="0.12 0.12 0.12">
+              <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2"></a-sphere>
+            </a-sphere>
+            <a-sphere class="eye" color="#efefef" position="-0.16 0.1 -0.35" scale="0.12 0.12 0.12">
+              <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2"></a-sphere>
+            </a-sphere>
+          </a-entity>
+        </a-entity>
+      </template>
+
+      <!-- /Templates -->
+    </a-assets>
+
+    <a-entity id="player" networked="template:#avatar-template;attachTemplateToLocal:false;"
+    camera="fov:80" look-controls  wasd-controls="acceleration:100"
+      position="0 3.05 0.6" rotation="0 0 0"
+      >   
+      <!-- scroll -->
+
+      <a-entity light="type: point;  distance: 10;  color: #fff; intensity:0.4; decay: 0.05" position="0 0 0"></a-entity>
+      <a-sphere class="head" visible="false" random-color></a-sphere>
+      <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
+    </a-entity>
+    <!-- lights -->
+    <!-- <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity> -->
+
+    <a-entity id="ambientLight" light="type: ambient; color: #CCC"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 1" position="0.55717 2.48596 1.39464">
+    </a-entity>
+    <a-entity id="fillLight" light="type: directional; color: #efe; intensity:1" position="-1.46187 -0.55901 0.23332">
+    </a-entity>
+
+    <a-entity position="0 0 0"
+    geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+    material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+
+
+    <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
+    <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+
+
+    <!-- Characters -->
+
+ 
+    </a-entity>
+  </a-scene>
+
+  <script>
+    // On mobile remove elements that are resource heavy
+    var isMobile = AFRAME.utils.device.isMobile();
+  </script>
+
+  <script>
+    // Called by Networked-Aframe when connected to server
+    function onConnect() {
+      console.log("onConnect", new Date());
+    }
+
+    function lerp(x, y, t) {
+
+      return (1 - t) * x + t * y;
+
+    }
+
+
+
+    AFRAME.registerComponent('scroll', {
+      schema: { default: 1.0 },
+      init: function () {
+        let self = this
+        self.scrollY = document.getElementById("player").getAttribute("position").y
+        console.log("y position: ", scrollY)
+
+
+
+        window.addEventListener("wheel", function () {
+
+
+          let offset = event.deltaY;
+          console.log("offset", offset)
+          self.scrollY += offset * 0.001
+          console.log("self.scrollY", self.scrollY)
+
+
+        });
+
+
+      },
+      update: function () {
+
+      },
+
+      tick: function (time, dt) {
+        // console.log("dt: ", dt)
+        // console.log("time: ", time)
+        let curScroll = this.el.getAttribute("position")
+        curScroll.y = lerp(curScroll.y, this.scrollY, (1 - Math.exp( - 0.005 * dt )) )
+        this.el.setAttribute("position", curScroll)
+        if(curScroll.y>3){
+          this.scrollY = lerp(curScroll.y, 3, (1 - Math.exp( - 0.02 * dt )) )
+          this.el.setAttribute("position", curScroll)
+        }
+
+
+        if(curScroll.y<0.2){
+          this.scrollY = lerp(curScroll.y, 0.2, (1 - Math.exp( - 0.02 * dt )) )
+          this.el.setAttribute("position", curScroll)
+        }
+
+
+      }
+    });
+
+
+
+  </script>
+</body>
+
+</html>
