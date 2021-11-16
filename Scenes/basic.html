@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>CrytoGenLab</title>
+  <meta name="description" content="Web-XR-Gallery">
+
+  <!-- <script src="super/build.js"></script> -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+ 
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+
+      <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" />
+      <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
+      <!-- <a-asset-item id="01" src="assets/Minimal_Default.gltf"></a-asset-item> -->
+      <a-asset-item id="01" src="../Assets/Container01/Container01.gltf"></a-asset-item>
+      <a-asset-item id="02" src="../Assets/Container02/Container02.gltf"></a-asset-item>
+      <a-asset-item id="03" src="../Assets/Container03/Container03.gltf"></a-asset-item>
+      <a-asset-item id="04" src="../Assets/Monitor/Monitor.gltf"></a-asset-item>
+      <a-asset-item id="05" src="../Assets/Wall/Wall.gltf"></a-asset-item>
+      <a-asset-item id="06" src="../Assets/Balance/Balance.gltf"></a-asset-item>
+      <a-asset-item id="07" src="../Assets/Monitor01/Monitor01.gltf"></a-asset-item>
+      <a-asset-item id="08" src="../Assets/Device/Device.gltf"></a-asset-item>
+      <a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
+      <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
+       
+
+    </a-assets>
+    <a-entity id="rig"
+    movement-controls
+    position="0 1 0.6">
+    <a-entity id="player" camera="fov:80" look-controls wasd-controls="acceleration:50" position="0 3.05 0.6">
+      
+    </a-entity>
+    <a-entity hand-controls="hand:left"></a-entity>
+      <a-entity hand-controls="hand:right"></a-entity>
+  </a-entity>
+
+    <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity>
+    <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
+    <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
+    <a-entity id="model04" gltf-model="#04" position="1.5 0.9 0"></a-entity>
+    <a-entity id="model05" gltf-model="#05" position="2 0.9 0"></a-entity>
+    <a-entity id="model06" rotation="0 90 0" gltf-model="#06" position="-5.29673 2.34194 0.58127"></a-entity>
+    <a-entity id="model07" rotation="0 -90 0" gltf-model="#07" position="-5.90105 3.00126 2.66504"></a-entity>
+    <a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
+    <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
+    <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity>
+    
+
+    <a-entity id="ambientLight" light="type: ambient; color: #CCC"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 1" position="0.55717 2.48596 1.39464">
+    </a-entity>
+    <a-entity id="fillLight" light="type: directional; color: #efe; intensity:0.2" position="0.363 0.036 -0.004">
+    </a-entity>
+
+    <a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
+      material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
+    </a-entity>
+
+
+    <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
+    <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+
+  </a-scene>
+
+</body>
+
+
+
+</html>
