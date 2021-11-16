@@ -75,24 +75,83 @@
     <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
 
+    <!--<a-sphere
+            id="sphere"
+            position="0 3 -5"
+            radius="2"
+      color="blue"></a-sphere>-->
 
-    <a-entity id="ambientLight" light="type: ambient; color: #023e8a; intensity: 0.4"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.1" position="0.55717 2.48596 1.39464">
+    <a-entity id="ambientLight" light="type: ambient; color: #ccc; intensity: 0"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #ccc; intensity: 1" position="10 10 10">
     </a-entity>
     <a-entity id="fillLight" light="type: directional; color: #90e0ef; intensity: 0.2" position="0.363 0.036 -0.004">
     </a-entity>
 
+    <a-sphere id="sphere" color="blue" position="0 6 2"></a-sphere>
+    <a-sphere color="blue" position="0 6 -2"></a-sphere>
 
     <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
-    <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
+    <!--<a-sky src="#sky"></a-sky>-->
 
   </a-scene>
-
 
   <script type="module">
     import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js"
     import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
     import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
+    import { LightProbeGenerator } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/lights/LightProbeGenerator.js";
+
+    const sceneEl = document.querySelector('a-scene');
+    const renderer = sceneEl.renderer;
+    let lightProbe;
+
+    renderer.toneMappingExposure = 0.5;
+
+    lightProbe = new THREE.LightProbe();
+
+    sceneEl.object3D.add(lightProbe);
+
+    new THREE.CubeTextureLoader()
+            .setPath( '../Assets/CubeMap/' )
+            .load( [
+              'Right.png',
+              'Left.png',
+              'Top.png',
+              'Bottom.png',
+              'Front.png',
+              'Back.png'
+            ], function (cubeTexture) {
+              cubeTexture.encoding = THREE.sRGBEncoding;
+              cubeTexture.mapping = THREE.CubeRefractionMapping;
+              sceneEl.object3D.background = cubeTexture;
+              lightProbe.copy( LightProbeGenerator.fromCubeTexture(cubeTexture) );
+
+              const canvas = document.createElement( 'canvas' );
+              canvas.width = 2;
+              canvas.height = 2;
+
+              const context = canvas.getContext( '2d' );
+              context.fillStyle = 'white';
+              context.fillRect( 0, 1, 2, 1 );
+
+              const texture = new THREE.CanvasTexture( canvas );
+
+              const sphere = document.getElementById("sphere").object3D;
+              sphere.el.object3DMap['mesh'].material = new THREE.MeshPhysicalMaterial( {
+                color: 0xfffff,
+                metalness: 0,
+                roughness: 0,
+                ior: 2,
+                envMap: cubeTexture,
+                envMapIntensity: 1,
+                transmission: 1, // use material.transmission for glass materials
+                specularIntensity: 1,
+                specularColor: 0xfffff,
+                opacity: 1,
+                side: THREE.DoubleSide,
+                transparent: true
+              } );
+            } );
 
     AFRAME.registerSystem('effects', {
       /**
@@ -114,19 +173,14 @@
 
         renderer.outputEncoding = THREE.sRGBEncoding;
 
-        this.lightProbe = new THREE.LightProbe();
-        this.lightProbe.intensity = 0.2;
-
-        scene.add(this.lightProbe);
-
         const composer = new EffectComposer(renderer);
         const pass1 = new RenderPass(scene, camera);
         const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
 
         pass2.threshold = 0.1;
-        pass2.exposure = 1;
-        pass2.strength = 1;
-        pass2.radius = 0.8;
+        pass2.exposure = 0.5;
+        pass2.strength = 0.5;
+        pass2.radius = 0.5;
 
 
         composer.addPass(pass1);
