@@ -52,26 +52,107 @@
     <a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
     <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity>
-    
 
-    <a-entity id="ambientLight" light="type: ambient; color: #CCC"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 1" position="0.55717 2.48596 1.39464">
+
+    <a-entity id="ambientLight" light="type: ambient; color: #023e8a; intensity: 0.4"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.1" position="0.55717 2.48596 1.39464">
     </a-entity>
-    <a-entity id="fillLight" light="type: directional; color: #efe; intensity:0.2" position="0.363 0.036 -0.004">
+    <a-entity id="fillLight" light="type: directional; color: #90e0ef; intensity: 0.2" position="0.363 0.036 -0.004">
     </a-entity>
 
     <a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
       material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
     </a-entity>
 
-
     <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
     <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
   </a-scene>
 
+
+  <script type="module">
+    import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js"
+    import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
+    import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
+
+    AFRAME.registerSystem('effects', {
+      /**
+       * Configure composer with a few arbitrary passes.
+       */
+      init: function () {
+        const sceneEl = this.sceneEl;
+
+        if (!sceneEl.hasLoaded) {
+          sceneEl.addEventListener('render-target-loaded', this.init.bind(this));
+          return;
+        }
+
+        const scene = sceneEl.object3D;
+        const renderer = sceneEl.renderer;
+        const camera = sceneEl.camera;
+
+        renderer.toneMapping = THREE.NoToneMapping;
+
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        this.lightProbe = new THREE.LightProbe();
+        this.lightProbe.intensity = 0.2;
+
+        scene.add(this.lightProbe);
+
+        const composer = new EffectComposer(renderer);
+        const pass1 = new RenderPass(scene, camera);
+        const pass2 = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+
+        pass2.threshold = 0.1;
+        pass2.exposure = 1;
+        pass2.strength = 1;
+        pass2.radius = 0.8;
+
+
+        composer.addPass(pass1);
+        composer.addPass(pass2);
+
+        this.composer = composer;
+        this.t = 0;
+        this.dt = 0;
+
+        this.bind();
+      },
+
+      /**
+       * Record the timestamp for the current frame.
+       * @param {number} t
+       * @param {number} dt
+       */
+      tick: function (t, dt) {
+        this.t = t;
+        this.dt = dt;
+      },
+
+      /**
+       * Binds the EffectComposer to the A-Frame render loop.
+       * (This is the hacky bit.)
+       */
+      bind: function () {
+        const renderer = this.sceneEl.renderer;
+        const render = renderer.render;
+        const system = this;
+        let isDigest = false;
+
+        renderer.render = function () {
+          if (isDigest) {
+            render.apply(this, arguments);
+          } else {
+            isDigest = true;
+            system.composer.render(system.dt);
+            isDigest = false;
+          }
+        };
+      }
+    });
+  </script>
+
 </body>
-
-
 
 </html>
