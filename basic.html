@@ -29,7 +29,14 @@
       <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
       <img id="sky" src="https://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
 
-
+      <a-cubemap id="sky">
+        <img src="/Assets/CubeMap/right.png">
+        <img src="/Assets/CubeMap/left.png">
+        <img src="/Assets/CubeMap/top.png">
+        <img src="/Assets/CubeMap/bottom.png">
+        <img src="/Assets/CubeMap/front.png">
+        <img src="/Assets/CubeMap/back.png">
+      </a-cubemap>
 
 
       <!-- Templates -->
@@ -52,13 +59,12 @@
       <!-- /Templates -->
     </a-assets>
 
-    <a-entity id="player" networked="template:#avatar-template;attachTemplateToLocal:false;"
-    camera="fov:80" look-controls  wasd-controls="acceleration:100"
-      position="0 3.05 0.6" rotation="0 0 0"
-      >   
+    <a-entity id="player" networked="template:#avatar-template;attachTemplateToLocal:false;" camera="fov:80"
+      look-controls wasd-controls="acceleration:100" position="0 3.05 0.6" rotation="0 0 0">
       <!-- scroll -->
 
-      <a-entity light="type: point;  distance: 10;  color: #fff; intensity:0.4; decay: 0.05" position="0 0 0"></a-entity>
+      <a-entity light="type: point;  distance: 10;  color: #fff; intensity:0.4; decay: 0.05" position="0 0 0">
+      </a-entity>
       <a-sphere class="head" visible="false" random-color></a-sphere>
       <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
     </a-entity>
@@ -71,18 +77,18 @@
     <a-entity id="fillLight" light="type: directional; color: #efe; intensity:1" position="-1.46187 -0.55901 0.23332">
     </a-entity>
 
-    <a-entity position="0 0 0"
-    geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-    material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+    <a-entity position="0 0 0" geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+      material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
+    </a-entity>
 
 
     <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
-    <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+    <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
 
     <!-- Characters -->
 
- 
+
     </a-entity>
   </a-scene>
 
@@ -135,16 +141,16 @@
         // console.log("dt: ", dt)
         // console.log("time: ", time)
         let curScroll = this.el.getAttribute("position")
-        curScroll.y = lerp(curScroll.y, this.scrollY, (1 - Math.exp( - 0.005 * dt )) )
+        curScroll.y = lerp(curScroll.y, this.scrollY, (1 - Math.exp(- 0.005 * dt)))
         this.el.setAttribute("position", curScroll)
-        if(curScroll.y>3){
-          this.scrollY = lerp(curScroll.y, 3, (1 - Math.exp( - 0.02 * dt )) )
+        if (curScroll.y > 3) {
+          this.scrollY = lerp(curScroll.y, 3, (1 - Math.exp(- 0.02 * dt)))
           this.el.setAttribute("position", curScroll)
         }
 
 
-        if(curScroll.y<0.2){
-          this.scrollY = lerp(curScroll.y, 0.2, (1 - Math.exp( - 0.02 * dt )) )
+        if (curScroll.y < 0.2) {
+          this.scrollY = lerp(curScroll.y, 0.2, (1 - Math.exp(- 0.02 * dt)))
           this.el.setAttribute("position", curScroll)
         }
 
