@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <a-scene>
+  <a-scene set-renderer>
     <a-assets>
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
@@ -58,7 +58,7 @@
   <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
 
     
-<a-entity id="player" camera="fov:90" look-controls  wasd-controls="acceleration:100" position="0 5 0.6"></a-entity>
+<a-entity id="player" camera="fov:90" look-controls  wasd-controls="acceleration:30" position="0 5 0.6"></a-entity>
 
     <a-entity 
     gltf-model="#01"
@@ -78,10 +78,10 @@
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
 
 
-    <a-entity id="ambientLight" light="type: ambient; color: #023e8a; intensity: 0.4"></a-entity>
+    <a-entity id="ambientLight" light="type: ambient; color: #00459e; intensity: 0.26; angle: 60"></a-entity>
     <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.1" position="0.55717 2.48596 1.39464">
     </a-entity>
-    <a-entity id="fillLight" light="type: directional; color: #90e0ef; intensity: 0.2" position="0.363 0.036 -0.004">
+    <a-entity id="fillLight" light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0" position="0.363 0.036 -0.004">
     </a-entity>
 
 
@@ -124,7 +124,7 @@
         const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
 
         pass2.threshold = 0.1;
-        pass2.exposure = 1;
+        pass2.exposure = 0.5;
         pass2.strength = 1;
         pass2.radius = 0.8;
 
@@ -172,7 +172,15 @@
     });
   </script>
 
-  
+<script>
+  AFRAME.registerComponent('set-renderer', {
+    // ...
+    init: function () {
+      this.el.renderer.physicallyCorrectLights = true;
+      this.el.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    }
+  })
+</script>
 
 </body>
 
