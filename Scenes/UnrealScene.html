@@ -8,7 +8,7 @@
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  <script src="https://unpkg.com/aframe-cubemap-component@2.1.1/dist/aframe-cubemap-component.min.js"></script>
+  <script src="/js/cube-map.component.js"></script>
 
 </head>
 
@@ -62,9 +62,9 @@
 
     <a-entity 
     gltf-model="#01"
-    cube-env-map="path: ../Assets/CubeMap2/;
+    cube-map="path: ../Assets/CubeMap2/;
                   extension: jpg;
-                  reflectivity: 1;">
+                  reflectivity: 0.9;">
     </a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
