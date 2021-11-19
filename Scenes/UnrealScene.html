@@ -8,6 +8,13 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/objects/Reflector.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/objects/Refractor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/objects/Water2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
     <script src="/js/cube-map.component.js"></script>
 
 </head>
@@ -29,6 +36,7 @@
         <a-asset-item id="08" src="../Assets/Device/Device.gltf"></a-asset-item>
         <a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
         <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
+        <a-asset-item id="11" src="../Assets/Incubator/Incubator.gltf"></a-asset-item>
 
         <a-cubemap id="sky">
             <img src="../Assets/CubeMap/right.png">
@@ -66,6 +74,9 @@
                   extension: jpg;
                   reflectivity: 0.9;">
     </a-entity>
+    <a-entity
+        gltf-model="#11"
+        position="10 2.5 5"></a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
     <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
@@ -78,8 +89,8 @@
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
 
 
-    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464">
+    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 5; angle: 60"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 5" position="0.55717 2.48596 1.39464">
     </a-entity>
     <a-entity id="fillLight"
               light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
@@ -87,17 +98,23 @@
     </a-entity>
 
     <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity>
-
+    <a-entity
+            cylinder-glass="percentage: 0.5; color: yellow"
+            position="-4 2.5 2"
+            animation="property: cylinder-glass.percentage; from: 0.5; to: 1; dir: alternate; dur: 2000; loop: true"></a-entity>
+    <a-entity cylinder-glass="percentage: 0.3; color: white" position="-4 2.5 0"></a-entity>
+    <a-entity cylinder-glass="percentage: 1; color: blue" position="-4 2.5 -2"></a-entity>
+    <!--<a-entity
+      id="cylinder"
+      glass-material
+      geometry="primitive: cylinder; radius: 1; height: 4;"
+      material="color: blue; side: double"
+      position="-5 5 2"></a-entity>-->
     <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
     <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
 </a-scene>
-<script type="module">
-  import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js"
-  import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
-  import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
-  import { LightProbeGenerator } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/lights/LightProbeGenerator.js";
-
+<script>
   AFRAME.registerSystem('effects', {
     /**
      * Configure composer with a few arbitrary passes.
@@ -123,14 +140,16 @@
       scene.add(this.lightProbe);
       const systemLightProbe = this.lightProbe;
 
-      const composer = new EffectComposer(renderer);
-      const pass1 = new RenderPass(scene, camera);
-      const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+      const composer = new THREE.EffectComposer(renderer);
+      const pass1 = new THREE.RenderPass(scene, camera);
+      const pass2 = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
 
-      pass2.threshold = 0.1;
-      pass2.exposure = 0.3;
-      pass2.strength = 0.411;
-      pass2.radius = 0.1;
+      pass2.threshold = 0;
+      pass2.exposure = 0.5;
+      pass2.strength = 1;
+      pass2.radius = 1;
+
+      console.log('PASS BLOOM')
 
       composer.addPass(pass1);
       composer.addPass(pass2);
@@ -145,7 +164,7 @@
           'Front.png',
           'Back.png'
         ], function (cubeTexture) {
-          systemLightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture));
+          systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
         });
 
       this.lightProbe = systemLightProbe;
@@ -188,6 +207,101 @@
       };
     }
   });
+
+  AFRAME.registerComponent('cylinder-glass', {
+    schema: {
+        height: { type: 'number', default: 5 },
+        percentage: { type: 'number', default: 1 },
+        radius: { type: 'number', default: 1 },
+        color: { type: 'string', default: '#fff' }
+    },
+    init: function () {
+      const el = this.el;
+      const data = this.data;
+      const position = el.getAttribute('position');
+
+      el.setAttribute('id', 'cylinder');
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 2;
+      canvas.height = 2;
+
+      const geometry = new THREE.CylinderGeometry(data.radius, data.radius, data.height * data.percentage, 32, 1, true);
+      this.geometry = geometry;
+
+      const texture = new THREE.CubeTextureLoader()
+        .setPath('../Assets/CubeMap/')
+        .load([
+          'Right.png',
+          'Left.png',
+          'Top.png',
+          'Bottom.png',
+          'Front.png',
+          'Back.png'
+        ]);
+
+      const material = new THREE.MeshPhysicalMaterial({
+        color: data.color,
+        metalness: 0.9,
+        transmission: 1, // use material.transmission for glass materials
+        opacity: 1,/*
+        alphaMap: new THREE.CanvasTexture(canvas),*/
+        envMap: texture,
+        clearcoat: 0.68,
+        envMapIntensity: 1,
+        reflectivity: 0.4,
+        side: THREE.FrontSide,
+        transparent: true
+      });
+
+      this.material = material;
+
+      /*const material = new THREE.MeshBasicMaterial({ color: 'blue' });*/
+
+      const mesh = new THREE.Mesh(geometry, material);
+      el.setObject3D('mesh', mesh);
+      mesh.position.set(position.x, position.y, position.z);
+      mesh.geometry.computeBoundingBox();
+      this.mesh = mesh;
+      this.moveOriginGeometry();
+    },
+
+    moveOriginGeometry: function () {
+      const geometry = this.mesh.geometry;
+      geometry.translate( 0, ((this.data.height * this.data.percentage) / 2) - this.mesh.position.y, 0 );
+      /*mesh.scale.y = this.data.percentage;
+      if (this.data.percentage !== 1) {
+        const height = mesh.geometry.boundingBox.max.y - mesh.geometry.boundingBox.min.y;
+
+        mesh.position.y = height * this.data.percentage / 2;
+        console.log(mesh);
+      }*/
+    },
+    update: function (oldData) {
+      var data = this.data;
+      var el = this.el;
+
+      // If `oldData` is empty, then this means we're in the initialization process.
+      // No need to update.
+      if (Object.keys(oldData).length === 0) { return; }
+
+      // Geometry-related properties changed. Update the geometry.
+      if (data.radius !== oldData.radius ||
+        data.height !== oldData.height ||
+        data.percentage !== oldData.percentage) {
+        el.getObject3D('mesh').geometry = new THREE.CylinderGeometry(data.radius, data.radius,
+          data.height * data.percentage, 32, 1, true);
+
+        this.moveOriginGeometry();
+      }
+
+      // Material-related properties changed. Update the material.
+      if (data.color !== oldData.color) {
+        console.log(data.color, oldData.color);
+        el.getObject3D('mesh').material.color = new THREE.Color(data.color);
+      }
+    }
+  });
 </script>
 
 <script>
@@ -195,9 +309,9 @@
     // ...
     init: function () {
       this.el.renderer.physicallyCorrectLights = true;
-      this.el.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      this.el.renderer.toneMapping = THREE.NoToneMapping;
     }
-  })
+  });
 </script>
 
 </body>
