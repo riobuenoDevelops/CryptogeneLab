@@ -9,6 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="/js/cube-map.component.js"></script>
+    <script src="../js/obj-lerp.component.js"></script>
+    <script src="../js/lerp.js"></script>
 
 </head>
 
@@ -19,7 +21,7 @@
         <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
         <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
         <!-- <a-asset-item id="01" src="assets/Minimal_Default.gltf"></a-asset-item> -->
-        <a-asset-item id="01" src="../Assets/Room/StaticMesh.gltf"></a-asset-item>
+        <!-- <a-asset-item id="01" src="../Assets/Room/StaticMesh.gltf"></a-asset-item> -->
         <a-asset-item id="02" src="../Assets/Container02/Container02.gltf"></a-asset-item>
         <a-asset-item id="03" src="../Assets/Container03/Container03.gltf"></a-asset-item>
         <a-asset-item id="04" src="../Assets/Monitor/Monitor.gltf"></a-asset-item>
@@ -29,6 +31,11 @@
         <a-asset-item id="08" src="../Assets/Device/Device.gltf"></a-asset-item>
         <a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
         <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
+        <a-asset-item id="cylinder" src="../Assets/Incubator2/IncubatorWater.gltf"></a-asset-item>
+        <a-asset-item id="01" src="../Assets/lab/RoomComplete.gltf"></a-asset-item>
+        
+        <!-- <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
+        <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item> -->
 
         <a-cubemap id="sky">
             <img src="../Assets/CubeMap/right.png">
@@ -42,6 +49,11 @@
 
     </a-assets>
 
+    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder" position=" 10.801 2.560 -9.077"></a-entity>
+    <!-- <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
+    <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity> -->
+
+    
     <!-- <a-entity position="0 0 0" geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
     material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
   </a-entity> -->
@@ -86,7 +98,7 @@
               position="0.363 0.036 -0.004">
     </a-entity>
 
-    <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity>
+    <!-- <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity> -->
 
     <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
     <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->

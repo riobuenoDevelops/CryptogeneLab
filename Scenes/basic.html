@@ -12,7 +12,6 @@
   <script src="../js/obj-lerp.component.js"></script>
   <script src="../js/lerp.js"></script>
 
-
 </head>
 
 <body>
@@ -33,9 +32,10 @@
       <a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
       <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
 
-      <a-asset-item id="Incubator" src="../Assets/Incubator/Incubator.gltf"></a-asset-item>
-      <a-asset-item id="cylinder" src="../Assets/Incubator/cylinder.gltf"></a-asset-item>
- 
+      <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
+      <a-asset-item id="cylinder" src="../Assets/Incubator2/IncubatorWater.gltf"></a-asset-item>
+      <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item>
+
 
 
     </a-assets>
@@ -46,7 +46,10 @@
       <a-entity hand-controls="hand:left"></a-entity>
       <a-entity hand-controls="hand:right"></a-entity>
     </a-entity>
-    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1" rotation="0 90 0" gltf-model="#cylinder" position=" 0 1.6 0"></a-entity>
+    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder" position=" 0 2.5 -8.140"></a-entity>
+    <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
+    <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity>
+
 
     <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity>
     <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
@@ -58,7 +61,6 @@
     <a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
     <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity>
-    <a-entity id="Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 1.6 0"></a-entity>
 
     <a-entity id="ambientLight" light="type: ambient; color: #CCC"></a-entity>
     <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 1" position="0.55717 2.48596 1.39464">
