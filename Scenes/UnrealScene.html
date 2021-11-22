@@ -17,6 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/FXAAShader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/UnrealBloomPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/libs/dat.gui.min.js"></script>
+    
+
     <script src="/js/cube-map.component.js"></script>
     <script src="../js/obj-lerp.component.js"></script>
     <script src="../js/lerp.js"></script>
@@ -151,10 +154,18 @@
         const pass2 = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
         const fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );
 
-        pass2.threshold = 0.15;
-        pass2.exposure = 0.8;
-        pass2.strength = 0.6;
-        pass2.radius = 0.5;
+
+        const gui = new dat.GUI()
+      gui.add( pass2, "threshold", 0, 5)
+      // gui.add( pass2, "exposure", 0, 1)
+      gui.add( pass2, "strength", 0, 5)
+      gui.add( pass2, "radius", 0, 5)
+
+
+        // pass2.threshold = 0.15;
+        // pass2.exposure = 0.8;
+        // pass2.strength = 0.6;
+        // pass2.radius = 0.5;
 
         composer.addPass(pass1);
         composer.addPass(pass2);
@@ -174,6 +185,7 @@
           });
 
         this.lightProbe = systemLightProbe;
+        gui.add( this.lightProbe, "intensity", 0, 5)
 
         this.composer = composer;
         this.t = 0;
