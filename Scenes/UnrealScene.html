@@ -76,7 +76,7 @@
             gltf-model="#01"
             cube-map="path: ../Assets/CubeMap2/;
                   extension: jpg;
-                  reflectivity: 0.9;">
+                  reflectivity: 0.2;">
     </a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
@@ -90,11 +90,11 @@
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
 
 
-    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464">
+    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60" visible="true"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464" visible="true">
     </a-entity>
     <a-entity id="fillLight"
-              light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
+              light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0" visible="true"
               position="0.363 0.036 -0.004">
     </a-entity>
 
@@ -109,6 +109,8 @@
   import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
   import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
   import { LightProbeGenerator } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/lights/LightProbeGenerator.js";
+  import { GUI } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/libs/dat.gui.module.js'
+
 
   AFRAME.registerSystem('effects', {
     /**
@@ -139,29 +141,39 @@
       const pass1 = new RenderPass(scene, camera);
       const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
 
-      pass2.threshold = 0.1;
-      pass2.exposure = 0.3;
-      pass2.strength = 0.411;
-      pass2.radius = 0.1;
+
+      const gui = new GUI()
+      gui.add( pass2, "threshold", 0, 5)
+      // gui.add( pass2, "exposure", 0, 1)
+      gui.add( pass2, "strength", 0, 5)
+      gui.add( pass2, "radius", 0, 5)
+      gui.add( this.lightProbe, "intensity", 0, 5)
+
+
+      pass2.threshold = 0.08;
+      // pass2.exposure = 0.0;
+      pass2.strength = 1.8;
+      pass2.radius = 0.16;
 
       composer.addPass(pass1);
       composer.addPass(pass2);
 
       new THREE.CubeTextureLoader()
-        .setPath('../Assets/CubeMap/')
+        .setPath('../Assets/CubeMap2/')
         .load([
-          'Right.png',
-          'Left.png',
-          'Top.png',
-          'Bottom.png',
-          'Front.png',
-          'Back.png'
+          'negx.jpg',
+          'posx.jpg',
+          'negy.jpg',
+          'posy.jpg',
+          'negz.jpg',
+          'posz.jpg'
         ], function (cubeTexture) {
           systemLightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture));
+          systemLightProbe.intensity= 0
         });
 
       this.lightProbe = systemLightProbe;
-
+      this.lightProbe.intensity = 0
       this.composer = composer;
       this.t = 0;
       this.dt = 0;
