@@ -8,6 +8,15 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/Pass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/FXAAShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
     <script src="/js/cube-map.component.js"></script>
     <script src="../js/obj-lerp.component.js"></script>
     <script src="../js/lerp.js"></script>
@@ -15,7 +24,7 @@
 </head>
 
 <body>
-<a-scene set-renderer >
+<a-scene set-renderer>
     <a-assets>
 
         <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
@@ -90,8 +99,8 @@
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
 
 
-    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60" visible="true"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464" visible="true">
+    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.5; angle: 60"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.5" position="0.55717 2.48596 1.39464">
     </a-entity>
     <a-entity id="fillLight"
               light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0" visible="true"
@@ -105,12 +114,6 @@
 
 </a-scene>
 <script type="module">
-  import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js"
-  import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
-  import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
-  import { LightProbeGenerator } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/lights/LightProbeGenerator.js";
-  import { GUI } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/libs/dat.gui.module.js'
-
 
   AFRAME.registerSystem('effects', {
     /**
@@ -118,67 +121,65 @@
      */
     init: function () {
       const sceneEl = this.sceneEl;
-
-      if (!sceneEl.hasLoaded) {
-        sceneEl.addEventListener('render-target-loaded', this.init.bind(this));
-        return;
-      }
-
       const scene = sceneEl.object3D;
       const renderer = sceneEl.renderer;
       const camera = sceneEl.camera;
 
-      renderer.toneMapping = THREE.NoToneMapping;
-      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.autoClear = false;
+      //renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.antialias = true;
+      renderer.alpha = true;
 
-      this.lightProbe = new THREE.LightProbe();
-      this.lightProbe.intensity = 0;
-
-      scene.add(this.lightProbe);
-      const systemLightProbe = this.lightProbe;
-
-      const composer = new EffectComposer(renderer);
-      const pass1 = new RenderPass(scene, camera);
-      const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+      if (!sceneEl.hasLoaded) {
+        sceneEl.addEventListener('loaded', this.init.bind(this));
+        return;
+      }
 
 
-      const gui = new GUI()
-      gui.add( pass2, "threshold", 0, 5)
-      // gui.add( pass2, "exposure", 0, 1)
-      gui.add( pass2, "strength", 0, 5)
-      gui.add( pass2, "radius", 0, 5)
-      gui.add( this.lightProbe, "intensity", 0, 5)
+        renderer.toneMapping = THREE.NoToneMapping;
+        renderer.outputEncoding = THREE.sRGBEncoding;
 
+        this.lightProbe = new THREE.LightProbe();
+        this.lightProbe.intensity = 0;
 
-      pass2.threshold = 0.08;
-      // pass2.exposure = 0.0;
-      pass2.strength = 1.8;
-      pass2.radius = 0.16;
+        scene.add(this.lightProbe);
+        const systemLightProbe = this.lightProbe;
 
-      composer.addPass(pass1);
-      composer.addPass(pass2);
+        const composer = new THREE.EffectComposer(renderer);
+        composer.setSize(window.innerWidth, window.innerHeight);
+        const pass1 = new THREE.RenderPass(scene, camera);
+        const pass2 = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        const fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );
 
-      new THREE.CubeTextureLoader()
-        .setPath('../Assets/CubeMap2/')
-        .load([
-          'negx.jpg',
-          'posx.jpg',
-          'negy.jpg',
-          'posy.jpg',
-          'negz.jpg',
-          'posz.jpg'
-        ], function (cubeTexture) {
-          systemLightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture));
-          systemLightProbe.intensity= 0
-        });
+        pass2.threshold = 0.15;
+        pass2.exposure = 0.8;
+        pass2.strength = 0.6;
+        pass2.radius = 0.5;
 
-      this.lightProbe = systemLightProbe;
-      this.lightProbe.intensity = 0
-      this.composer = composer;
-      this.t = 0;
-      this.dt = 0;
+        composer.addPass(pass1);
+        composer.addPass(pass2);
+        composer.addPass(fxaaPass);
 
-      this.bind();
+        new THREE.CubeTextureLoader()
+          .setPath('../Assets/CubeMap/')
+          .load([
+            'Right.png',
+            'Left.png',
+            'Top.png',
+            'Bottom.png',
+            'Front.png',
+            'Back.png'
+          ], function (cubeTexture) {
+            systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
+          });
+
+        this.lightProbe = systemLightProbe;
+
+        this.composer = composer;
+        this.t = 0;
+        this.dt = 0;
+
+        this.bind();
     },
 
     /**
@@ -203,7 +204,7 @@
 
       renderer.render = function () {
         if (isDigest) {
-          render.apply(this, arguments);
+          render.apply(this, arguments)
         } else {
           isDigest = true;
           system.composer.render(system.dt);
