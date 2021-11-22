@@ -5,9 +5,7 @@
     <title>CryptoGenLab</title>
     <meta name="description" content="Web-XR-Gallery">
 
-
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="/js/cube-map.component.js"></script>
@@ -23,7 +21,7 @@
         <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
         <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
         <!-- <a-asset-item id="01" src="assets/Minimal_Default.gltf"></a-asset-item> -->
-        <a-asset-item id="01" src="../Assets/Room/StaticMesh.gltf"></a-asset-item>
+        <!-- <a-asset-item id="01" src="../Assets/Room/StaticMesh.gltf"></a-asset-item> -->
         <a-asset-item id="02" src="../Assets/Container02/Container02.gltf"></a-asset-item>
         <a-asset-item id="03" src="../Assets/Container03/Container03.gltf"></a-asset-item>
         <a-asset-item id="04" src="../Assets/Monitor/Monitor.gltf"></a-asset-item>
@@ -33,11 +31,12 @@
         <a-asset-item id="08" src="../Assets/Device/Device.gltf"></a-asset-item>
         <a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
         <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
-        <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
         <a-asset-item id="cylinder" src="../Assets/Incubator2/IncubatorWater.gltf"></a-asset-item>
-        <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item>
-
+        <a-asset-item id="01" src="../Assets/lab/RoomComplete.gltf"></a-asset-item>
         
+        <!-- <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
+        <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item> -->
+
         <a-cubemap id="sky">
             <img src="../Assets/CubeMap/right.png">
             <img src="../Assets/CubeMap/left.png">
@@ -50,6 +49,11 @@
 
     </a-assets>
 
+    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder" position=" 10.801 2.560 -9.077"></a-entity>
+    <!-- <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
+    <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity> -->
+
+    
     <!-- <a-entity position="0 0 0" geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
     material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
   </a-entity> -->
@@ -64,10 +68,6 @@
 
     <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
 
-    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder" position=" 0 2.5 -8.140"></a-entity>
-    <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
-    <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity>
-
 
     <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:30" position="0 5 0.6"></a-entity>
 
@@ -76,26 +76,8 @@
             gltf-model="#01"
             cube-map="path: ../Assets/CubeMap2/;
                   extension: jpg;
-                  reflectivity: 0.9;">
+                  reflectivity: 0.2;">
     </a-entity>
-
-    <a-entity
-    id="c-cylinder"
-    gltf-model="#e-cylinder"
-    cube-map="path: ../Assets/CubeMap2/;
-          extension: jpg;
-          reflectivity: 0.9;">
-</a-entity>
-
-<a-entity
-id="c-Incubator"
-gltf-model="#e-Incubator"
-cube-map="path: ../Assets/CubeMap2/;
-      extension: jpg;
-      reflectivity: 0.9;">
-</a-entity>
-
-
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
     <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
@@ -108,26 +90,27 @@ cube-map="path: ../Assets/CubeMap2/;
     <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
 
 
-    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464">
+    <a-entity id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60" visible="true"></a-entity>
+    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464" visible="true">
     </a-entity>
     <a-entity id="fillLight"
-              light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
+              light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0" visible="true"
               position="0.363 0.036 -0.004">
     </a-entity>
 
-    <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity>
+    <!-- <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity> -->
 
     <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
     <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
 </a-scene>
-
 <script type="module">
   import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js"
   import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
   import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
   import { LightProbeGenerator } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/lights/LightProbeGenerator.js";
+  import { GUI } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/libs/dat.gui.module.js'
+
 
   AFRAME.registerSystem('effects', {
     /**
@@ -135,12 +118,12 @@ cube-map="path: ../Assets/CubeMap2/;
      */
     init: function () {
       const sceneEl = this.sceneEl;
-      
+
       if (!sceneEl.hasLoaded) {
         sceneEl.addEventListener('render-target-loaded', this.init.bind(this));
         return;
       }
-      console.log("bd-test",this)
+
       const scene = sceneEl.object3D;
       const renderer = sceneEl.renderer;
       const camera = sceneEl.camera;
@@ -158,29 +141,39 @@ cube-map="path: ../Assets/CubeMap2/;
       const pass1 = new RenderPass(scene, camera);
       const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
 
-      pass2.threshold = 0.1;
-      pass2.exposure = 0.3;
-      pass2.strength = 0.411;
-      pass2.radius = 0.1;
+
+      const gui = new GUI()
+      gui.add( pass2, "threshold", 0, 5)
+      // gui.add( pass2, "exposure", 0, 1)
+      gui.add( pass2, "strength", 0, 5)
+      gui.add( pass2, "radius", 0, 5)
+      gui.add( this.lightProbe, "intensity", 0, 5)
+
+
+      pass2.threshold = 0.08;
+      // pass2.exposure = 0.0;
+      pass2.strength = 1.8;
+      pass2.radius = 0.16;
 
       composer.addPass(pass1);
       composer.addPass(pass2);
 
       new THREE.CubeTextureLoader()
-        .setPath('../Assets/CubeMap/')
+        .setPath('../Assets/CubeMap2/')
         .load([
-          'Right.png',
-          'Left.png',
-          'Top.png',
-          'Bottom.png',
-          'Front.png',
-          'Back.png'
+          'negx.jpg',
+          'posx.jpg',
+          'negy.jpg',
+          'posy.jpg',
+          'negz.jpg',
+          'posz.jpg'
         ], function (cubeTexture) {
           systemLightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture));
+          systemLightProbe.intensity= 0
         });
 
       this.lightProbe = systemLightProbe;
-
+      this.lightProbe.intensity = 0
       this.composer = composer;
       this.t = 0;
       this.dt = 0;
@@ -209,7 +202,6 @@ cube-map="path: ../Assets/CubeMap2/;
       let isDigest = false;
 
       renderer.render = function () {
-        console.log("ssssss")
         if (isDigest) {
           render.apply(this, arguments);
         } else {
