@@ -56,7 +56,7 @@ AFRAME.registerComponent('cube-map', {
     path: {default: ''},
     extension: {default: 'jpg', oneOf: ['jpg', 'png']},
     format: {default: 'RGBFormat', oneOf: ['RGBFormat', 'RGBAFormat']},
-    enableBackground: {default: false},
+    enableBackground: {default: false },
     reflectivity: {default: 1, min: 0, max: 1},
     materials: {default: []}
   },

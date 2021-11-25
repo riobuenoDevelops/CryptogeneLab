@@ -45,7 +45,8 @@
         <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
         <a-asset-item id="cylinder" src="../Assets/Incubator2/IncubatorWater.gltf"></a-asset-item>
         <a-asset-item id="01" src="../Assets/lab/RoomComplete.gltf"></a-asset-item>
-        
+        <a-asset-item id="Player_Character" src="../Assets/Character/MadScientist_GLTF.gltf"></a-asset-item>
+
         <!-- <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
         <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item> -->
 
@@ -60,7 +61,9 @@
 
 
     </a-assets>
-
+    <a-entity gltf-model="#Player_Character" position="0 2 3" animation-mixer="clip:sc_Idle"></a-entity>
+    <a-entity gltf-model="#Player_Character" position="0 2 4" animation-mixer="clip:Sc_Run_2"></a-entity>
+    <a-entity gltf-model="#Player_Character" position="0 2 5" animation-mixer="clip:Sc_walk_loop"></a-entity>
     <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder" position=" 10.801 2.560 -9.077"></a-entity>
     <!-- <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
     <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity> -->
