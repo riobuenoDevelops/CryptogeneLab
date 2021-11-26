@@ -11,6 +11,17 @@
   <script src="/js/cube-map.component.js"></script>
   <script src="../js/obj-lerp.component.js"></script>
   <script src="../js/lerp.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/Pass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/FXAAShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/libs/dat.gui.min.js"></script>
 
 </head>
 
@@ -105,116 +116,9 @@
     <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
   </a-scene>
-  <script type="module">
-    import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js"
-    import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js";
-    import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js";
-    import { LightProbeGenerator } from "https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/lights/LightProbeGenerator.js";
-    import { GUI } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/libs/dat.gui.module.js'
-    const gui = new GUI()
-
-
-    AFRAME.registerSystem('effects', {
-      /**
-       * Configure composer with a few arbitrary passes.
-       */
-      init: function () {
-        const sceneEl = this.sceneEl;
-
-        if (!sceneEl.hasLoaded) {
-          sceneEl.addEventListener('render-target-loaded', this.init.bind(this));
-          return;
-        }
-
-        const scene = sceneEl.object3D;
-        const renderer = sceneEl.renderer;
-        const camera = sceneEl.camera;
-
-        renderer.toneMapping = THREE.NoToneMapping;
-        renderer.outputEncoding = THREE.sRGBEncoding;
-
-        this.lightProbe = new THREE.LightProbe();
-
-        scene.add(this.lightProbe);
-        const systemLightProbe = this.lightProbe;
-
-        const composer = new EffectComposer(renderer);
-        const pass1 = new RenderPass(scene, camera);
-        const pass2 = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-
-
-
-
-        pass2.threshold = 0.1;
-        pass2.exposure = 0.3;
-        pass2.strength = 1.6;
-        pass2.radius = 0.64;
-
-        composer.addPass(pass1);
-        composer.addPass(pass2);
-
-        new THREE.CubeTextureLoader()
-          .setPath('../Assets/CubeMap2/')
-          .load([
-            'posx.jpg',
-            'negx.jpg',
-            'posy.jpg',
-            'negy.jpg',
-            'posz.jpg',
-            'negz.jpg'
-          ], function (cubeTexture) {
-            systemLightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture));
-            systemLightProbe.intensity=0.05
-          });
-        this.lightProbe = systemLightProbe;
-
-        this.composer = composer;
-        this.t = 0;
-        this.dt = 0;
-
-        this.lightProbe.intensity=0.05
-
-        gui.add(pass2, "threshold", 0, 1)
-        // gui.add( pass2, "exposure", 0, 1)
-        gui.add(pass2, "strength", 0, 5)
-        gui.add(pass2, "radius", 0, 1)
-        gui.add( this.lightProbe, "intensity", 0, 1)
-
-        this.bind();
-      },
-
-      /**
-       * Record the timestamp for the current frame.
-       * @param {number} t
-       * @param {number} dt
-       */
-      tick: function (t, dt) {
-        this.t = t;
-        this.dt = dt;
-      },
-
-      /**
-       * Binds the EffectComposer to the A-Frame render loop.
-       * (This is the hacky bit.)
-       */
-      bind: function () {
-        const renderer = this.sceneEl.renderer;
-        const render = renderer.render;
-        const system = this;
-        let isDigest = false;
-
-        renderer.render = function () {
-          if (isDigest) {
-            render.apply(this, arguments);
-          } else {
-            isDigest = true;
-            system.composer.render(system.dt);
-            isDigest = false;
-          }
-        };
-      }
-    });
-  </script>
+ 
+  
+  
 
   <script>
   AFRAME.registerComponent('set-renderer', {
@@ -224,6 +128,125 @@
       this.el.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     }
   })
+</script>
+
+<script type="module">
+
+  AFRAME.registerSystem('effects', {
+    /**
+     * Configure composer with a few arbitrary passes.
+     */
+    init: function () {
+      const sceneEl = this.sceneEl;
+      const scene = sceneEl.object3D;
+      const renderer = sceneEl.renderer;
+      const camera = sceneEl.camera;
+
+      renderer.autoClear = false;
+      //renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.antialias = true;
+      renderer.alpha = true;
+
+      if (!sceneEl.hasLoaded) {
+        sceneEl.addEventListener('loaded', this.init.bind(this));
+        return;
+      }
+
+
+        renderer.toneMapping = THREE.NoToneMapping;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        this.lightProbe = new THREE.LightProbe();
+        this.lightProbe.intensity = 0;
+
+        scene.add(this.lightProbe);
+        const systemLightProbe = this.lightProbe;
+
+        const composer = new THREE.EffectComposer(renderer);
+        composer.setSize(window.innerWidth, window.innerHeight);
+        const pass1 = new THREE.RenderPass(scene, camera);
+        const pass2 = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        const fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );
+
+        pass2.threshold = 0.15;
+        // pass2.exposure = 0.8;
+        pass2.strength = 1.6;
+        pass2.radius = 0.64;
+
+        const gui = new dat.GUI()
+      gui.add( pass2, "threshold", 0, 5)
+      // gui.add( pass2, "exposure", 0, 1)
+      gui.add( pass2, "strength", 0, 5)
+      gui.add( pass2, "radius", 0, 5)
+
+
+        // pass2.threshold = 0.15;
+        // pass2.exposure = 0.8;
+        // pass2.strength = 0.6;
+        // pass2.radius = 0.5;
+
+
+        composer.addPass(pass1);
+        composer.addPass(pass2);
+        composer.addPass(fxaaPass);
+
+        new THREE.CubeTextureLoader()
+          .setPath('../Assets/CubeMap/')
+          .load([
+            'Right.png',
+            'Left.png',
+            'Top.png',
+            'Bottom.png',
+            'Front.png',
+            'Back.png'
+          ], function (cubeTexture) {
+            systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
+            systemLightProbe.intensity=0.1
+          });
+
+        this.lightProbe = systemLightProbe;
+        
+        gui.add( this.lightProbe, "intensity", 0, 1)
+
+        this.lightProbe.intensity=0.1
+        this.composer = composer;
+        this.t = 0;
+        this.dt = 0;
+
+        this.bind();
+    },
+
+    /**
+     * Record the timestamp for the current frame.
+     * @param {number} t
+     * @param {number} dt
+     */
+    tick: function (t, dt) {
+      this.t = t;
+      this.dt = dt;
+    },
+
+    /**
+     * Binds the EffectComposer to the A-Frame render loop.
+     * (This is the hacky bit.)
+     */
+    bind: function () {
+      const renderer = this.sceneEl.renderer;
+      const render = renderer.render;
+      const system = this;
+      let isDigest = false;
+
+      renderer.render = function () {
+        if (isDigest) {
+          render.apply(this, arguments)
+        } else {
+          isDigest = true;
+          system.composer.render(system.dt);
+          isDigest = false;
+        }
+      };
+    }
+  });
 </script>
 
  
