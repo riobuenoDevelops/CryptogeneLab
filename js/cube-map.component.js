@@ -74,7 +74,7 @@ AFRAME.registerComponent('cube-map', {
     this.object3dsetHandler = () => {
       const mesh = this.el.getObject3D('mesh');
       const data = this.data;
-      applyEnvMap(mesh, data.materials, this.texture, data.reflectivity);
+      applyEnvMap(mesh, data.materials, this.texture, 1);
     };
     this.el.addEventListener('object3dset', this.object3dsetHandler);
   },
