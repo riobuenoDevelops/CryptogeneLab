@@ -67,6 +67,32 @@
     </a-entity>
     <a-entity id="fillLight" light="type: directional; color: #efe; intensity:0.2" position="0.363 0.036 -0.004">
     </a-entity>
+    
+    <a-entity id="e-1" rotation="0 -90 0" position="0 4 0" >
+      <a-plane id="p-1" levitate="speed:0.001;offset:0.1" src="https://via.placeholder.com/500/FFff00">
+
+      </a-plane>
+    </a-entity>
+
+    <a-entity id="e-2" rotation="0 -90 0" position="0 4 2" >
+      <a-plane id="p-2" levitate="speed:0.0012;offset:0.3" src="https://via.placeholder.com/500/FF0055">
+
+      </a-plane>
+    </a-entity>
+
+    <a-entity id="e-3" rotation="0 -90 0" position="0 4 4" >
+      <a-plane id="p-3" levitate="speed:0.0013;offset:0.5" src="https://via.placeholder.com/500/FF0000">
+
+      </a-plane>
+    </a-entity>
+
+    <a-entity id="e-4" rotation="0 -90 0" position="0 4 6" >
+      <a-plane id="p-4" levitate="speed:0.0014;offset:0.7" src="https://via.placeholder.com/500/00ff00">
+
+      </a-plane>
+    </a-entity>
+
+ 
 
     <a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
       material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
@@ -80,7 +106,56 @@
 
 </body>
 <script>
+
  
+  
+  AFRAME.registerComponent('levitate', {
+    schema: {  
+    speed: { default: 0.5 },
+    offset:{ default: 1},
+   },
+
+    init: function () {
+      let self = this
+      let data = this.data
+      this.initPos= this.el.getAttribute("position").y
+      this.topPos=  this.initPos+ data.offset
+      this.bottomPos= this.initPos-   data.offset
+
+
+      console.log("init", this.initPos)
+      console.log("topPos",  this.topPos)
+      console.log("bottomPos",  this.bottomPos)
+      
+
+    },
+    update: function () {
+
+    },
+
+    tick: function (time, dt) {
+        // console.log("sine Wave", Math.sin(time*0.001))
+
+      let position = this.el.getAttribute("position")
+      // curScroll.y = lerp(curScroll.y, this.scrollY, (1 - Math.exp(- 0.005 * dt)))
+      // this.el.setAttribute("position", curScroll)
+      // if (curScroll.y > 3) {
+        position.y = lerp(this.bottomPos, this.topPos, (Math.sin(time*this.data.speed)))
+        console.log("pos y", position.y)
+      //   this.el.setAttribute("position", curScroll)
+      // }
+
+
+      // if (curScroll.y < 0.2) {
+      //   this.scrollY = lerp(curScroll.y, 0.2, (1 - Math.exp(- 0.02 * dt)))
+      //   this.el.setAttribute("position", curScroll)
+      // }
+
+
+    }
+  });
+
+
 </script>
 
 
