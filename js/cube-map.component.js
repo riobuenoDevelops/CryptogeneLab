@@ -1,9 +1,64 @@
+/**
+ * @param  {Array<THREE.Material>|THREE.Material} material
+ * @return {Array<THREE.Material>}
+ */
+ function ensureMaterialArray (material) {
+  if (!material) {
+    return [];
+  } else if (Array.isArray(material)) {
+    return material;
+  } else if (material.materials) {
+    return material.materials;
+  } else {
+    return [material];
+  }
+}
+
+/**
+ * @param  {THREE.Object3D} mesh
+ * @param  {Array<string>} materialNames
+ * @param  {THREE.Texture} envMap
+ * @param  {number} reflectivity  [description]
+ */
+function applyEnvMap (mesh, materialNames, envMap, reflectivity) {
+  if (!mesh) return;
+
+  materialNames = materialNames || [];
+
+  mesh.traverse((node) => {
+
+    if (!node.isMesh) return;
+
+    const meshMaterials = ensureMaterialArray(node.material);
+
+    meshMaterials.forEach((material) => {
+
+      if (material && !('envMap' in material)) return;
+      if (materialNames.length && materialNames.indexOf(material.name) === -1) return;
+
+      material.envMap = envMap;
+      material.reflectivity = reflectivity;
+      material.needsUpdate = true;
+
+    });
+
+  });
+}
+
+/**
+ * Specifies an envMap on an entity, without replacing any existing material
+ * properties.
+ */
 AFRAME.registerComponent('cube-map', {
+  multiple: true,
+
   schema: {
     path: {default: ''},
-    extension: {default: 'jpg'},
-    format: {default: 'RGBFormat'},
-    enableBackground: {default: false}
+    extension: {default: 'jpg', oneOf: ['jpg', 'png']},
+    format: {default: 'RGBFormat', oneOf: ['RGBFormat', 'RGBAFormat']},
+    enableBackground: {default: true },
+    reflectivity: {default: 1, min: 0, max: 1},
+    materials: {default: []}
   },
 
   init: function () {
@@ -16,25 +71,61 @@ AFRAME.registerComponent('cube-map', {
     ]);
     this.texture.format = THREE[data.format];
 
-    if (data.enableBackground) {
-      this.el.sceneEl.object3D.background = this.texture;
-    }
-
-    this.applyEnvMap();
-    this.el.addEventListener('object3dset', this.applyEnvMap.bind(this));
+    this.object3dsetHandler = () => {
+      const mesh = this.el.getObject3D('mesh');
+      const data = this.data;
+      applyEnvMap(mesh, data.materials, this.texture, 1);
+    };
+    this.el.addEventListener('object3dset', this.object3dsetHandler);
   },
 
-  applyEnvMap: function () {
+  update: function (oldData) {
+    const data = this.data;
     const mesh = this.el.getObject3D('mesh');
-    const envMap = this.texture;
 
-    if (!mesh) return;
+    let addedMaterialNames = [];
+    let removedMaterialNames = [];
 
-    mesh.traverse(function (node) {
-      if (node.material && 'envMap' in node.material) {
-        node.material.envMap = envMap;
-        node.material.needsUpdate = true;
+    if (data.materials.length) {
+      if (oldData.materials) {
+        addedMaterialNames = data.materials.filter((name) => !oldData.materials.includes(name));
+        removedMaterialNames = oldData.materials.filter((name) => !data.materials.includes(name));
+      } else {
+        addedMaterialNames = data.materials;
       }
-    });
+    }
+    if (addedMaterialNames.length) {
+      applyEnvMap(mesh, addedMaterialNames, this.texture, data.reflectivity);
+    }
+    if (removedMaterialNames.length) {
+      applyEnvMap(mesh, removedMaterialNames, null, 1);
+    }
+
+    if (oldData.materials && data.reflectivity !== oldData.reflectivity) {
+      const maintainedMaterialNames = data.materials
+        .filter((name) => oldData.materials.includes(name));
+      if (maintainedMaterialNames.length) {
+        applyEnvMap(mesh, maintainedMaterialNames, this.texture, data.reflectivity);
+      }
+    }
+
+    if (this.data.enableBackground && !oldData.enableBackground) {
+      this.setBackground(this.texture);
+    } else if (!this.data.enableBackground && oldData.enableBackground) {
+      this.setBackground(null);
+    }
+  },
+
+  remove: function () {
+    this.el.removeEventListener('object3dset', this.object3dsetHandler);
+    const mesh = this.el.getObject3D('mesh');
+    const data = this.data;
+
+    applyEnvMap(mesh, data.materials, null, 1);
+    if (data.enableBackground) this.setBackground(null);
+  },
+
+  setBackground: function (texture) {
+    this.el.sceneEl.object3D.background = texture;
   }
 });
