@@ -1,0 +1,256 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>CryptoGenLab_Lobby</title>
+  <meta name="description" content="Web-XR-Gallery">
+
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="/js/cube-map.component.js"></script>
+  <script src="../js/obj-lerp.component.js"></script>
+  <script src="../js/lerp.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/Pass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/shaders/FXAAShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/libs/dat.gui.min.js"></script>
+
+</head>
+
+<body>
+  <a-scene set-renderer>
+    <a-assets>
+      <!-- <a-asset-item id="01" src="../Assets/lab2/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
+      <!-- <a-asset-item id="01" src="../Assets/lab4/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
+      <a-asset-item id="01" src="../Assets/lobbyGLTF/Lobby.gltf"></a-asset-item>
+      
+
+      <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
+      <!-- <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"> -->
+      <!-- <a-asset-item id="01" src="assets/Minimal_Default.gltf"></a-asset-item> -->
+      <!-- <a-asset-item id="01" src="../Assets/Room/StaticMesh.gltf"></a-asset-item> -->
+
+      <!-- <a-asset-item id="Player_Character" src="../Assets/Character/ScientistMale_GLTF_NoTextures_NoSK2.gltf"></a-asset-item> -->
+
+
+      <!-- <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
+        <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item> -->
+
+
+
+
+    </a-assets>
+    <!-- <a-entity gltf-model="#Player_Character" position="-0.420 2.5 8.510"></a-entity> -->
+
+
+    <!-- <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
+    <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity> -->
+
+
+    <!-- <a-entity position="0 0 0" geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+    material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
+  </a-entity> -->
+
+
+    <!-- <a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
+    material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
+  </a-entity> -->
+
+
+    <!-- <a-entity id="cubeMap" geometry="primitive: box; width:100; height:100; depth:100; side:double" material="envMap: #sky; roughness: 0"></a-entity> -->
+
+    <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
+
+    <a-entity rotation="0 180 0" position="-1 5 -10.22">
+      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:100" position="-0.8 3.3 -2.4"
+        rotation="0 180 0"></a-entity>
+    </a-entity>
+    <a-entity id="labModel" position="-0.18 6.6 2.5" rotation="0 360 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+
+    
+    </a-entity>
+    <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
+    <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
+    <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
+    <a-entity id="model04" gltf-model="#04" position="1.5 0.9 0"></a-entity>
+    <a-entity id="model05" gltf-model="#05" position="2 0.9 0"></a-entity>
+    <a-entity id="model06" rotation="0 90 0" gltf-model="#06" position="-5.29673 2.34194 0.58127"></a-entity>
+    <a-entity id="model07" rotation="0 -90 0" gltf-model="#07" position="-5.90105 3.00126 2.66504"></a-entity>
+    <a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
+    <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
+    <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
+
+
+    <!-- <a-entity visible="false" id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60"></a-entity>
+    <a-entity visible="false" id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464">
+    </a-entity>
+    <a-entity visible="false" id="fillLight"
+              light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
+              position="0.363 0.036 -0.004">
+    </a-entity> -->
+
+
+    <a-entity visible="false" id="fillLight"
+      light="type: directional; color: #90e0ef; intensity: 0.0; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
+      position="0.363 0.036 -0.004">
+    </a-entity>
+    
+    <a-entity id="aux_2" light="type: ambient; intensity: 0.19; distance: 50; decay: 2; color:#691b9e"
+      position="-2.32 6.07 4"></a-entity>
+
+
+    <!-- <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity> -->
+
+    <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
+    <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
+
+  </a-scene>
+
+
+
+
+  <script>
+    AFRAME.registerComponent('set-renderer', {
+      // ...
+      init: function () {
+        this.el.renderer.physicallyCorrectLights = true;
+        this.el.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      }
+    })
+  </script>
+
+  <script type="module">
+
+    AFRAME.registerSystem('effects', {
+      /**
+       * Configure composer with a few arbitrary passes.
+       */
+      init: function () {
+        const sceneEl = this.sceneEl;
+        const scene = sceneEl.object3D;
+        const renderer = sceneEl.renderer;
+        const camera = sceneEl.camera;
+
+        renderer.autoClear = false;
+        //renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.antialias = true;
+        renderer.alpha = true;
+
+        if (!sceneEl.hasLoaded) {
+          sceneEl.addEventListener('loaded', this.init.bind(this));
+          return;
+        }
+
+
+        renderer.toneMapping = THREE.NoToneMapping;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        this.lightProbe = new THREE.LightProbe();
+        this.lightProbe.intensity = 0;
+
+        scene.add(this.lightProbe);
+        const systemLightProbe = this.lightProbe;
+
+        const composer = new THREE.EffectComposer(renderer);
+        composer.setSize(window.innerWidth, window.innerHeight);
+        const pass1 = new THREE.RenderPass(scene, camera);
+        const pass2 = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        const fxaaPass = new THREE.ShaderPass(THREE.FXAAShader);
+
+        pass2.threshold = 0.25;
+        // pass2.exposure = 0.8;
+        pass2.strength = 1;
+        pass2.radius = 0.64;
+
+        const gui = new dat.GUI()
+        gui.add(pass2, "threshold", 0, 76)
+        // gui.add( pass2, "exposure", 0, 1)
+        gui.add(pass2, "strength", 0, 8)
+        gui.add(pass2, "radius", 0, 5)
+
+
+        // pass2.threshold = 0.15;
+        // pass2.exposure = 0.8;
+        // pass2.strength = 0.6;
+        // pass2.radius = 0.5;
+
+
+        composer.addPass(pass1);
+        composer.addPass(pass2);
+        composer.addPass(fxaaPass);
+
+        new THREE.CubeTextureLoader()
+          .setPath('../Assets/CubeMap2/')
+          .load([
+            'posx.jpg',
+            'negx.jpg',
+            'posy.jpg',
+            'negy.jpg',
+            'posz.jpg',
+            'negz.jpg'
+          ], function (cubeTexture) {
+            systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
+            systemLightProbe.intensity = 1
+          });
+
+        this.lightProbe = systemLightProbe;
+
+        gui.add(this.lightProbe, "intensity", 0, 10)
+
+        this.lightProbe.intensity = 1.15
+        this.composer = composer;
+        this.t = 0;
+        this.dt = 0;
+
+        this.bind();
+      },
+
+      /**
+       * Record the timestamp for the current frame.
+       * @param {number} t
+       * @param {number} dt
+       */
+      tick: function (t, dt) {
+        this.t = t;
+        this.dt = dt;
+      },
+
+      /**
+       * Binds the EffectComposer to the A-Frame render loop.
+       * (This is the hacky bit.)
+       */
+      bind: function () {
+        const renderer = this.sceneEl.renderer;
+        const render = renderer.render;
+        const system = this;
+        let isDigest = false;
+
+        renderer.render = function () {
+          if (isDigest) {
+            render.apply(this, arguments)
+          } else {
+            isDigest = true;
+            system.composer.render(system.dt);
+            isDigest = false;
+          }
+        };
+      }
+    });
+  </script>
+
+
+
+</body>
+
+</html>
