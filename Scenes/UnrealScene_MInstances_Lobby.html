@@ -30,7 +30,8 @@
     <a-assets>
       <!-- <a-asset-item id="01" src="../Assets/lab2/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
       <!-- <a-asset-item id="01" src="../Assets/lab4/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
-      <a-asset-item id="01" src="../Assets/lobbyGLTF/Lobby.gltf"></a-asset-item>
+      <a-asset-item id="01" src="../Assets/Lobby/Web_Lobby.gltf"></a-asset-item>
+      <a-asset-item id="02" src="../Assets/Monitors/Monitors.gltf"></a-asset-item>
       
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
@@ -70,14 +71,17 @@
     <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
 
     <a-entity rotation="0 180 0" position="-1 5 -10.22">
-      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:100" position="-0.8 3.3 -2.4"
-        rotation="0 180 0"></a-entity>
+      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:100" position="0 0 0"
+        rotation="0 0 0"></a-entity>
     </a-entity>
-    <a-entity id="labModel" position="-0.18 6.6 2.5" rotation="0 360 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="labModel" position="-3 3 -4" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-
+    <a-entity id="Monitors" position="-1.2 3.3 -5" rotation="0 270 0" gltf-model="#02" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
     
     </a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
@@ -168,7 +172,7 @@
         const pass2 = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
         const fxaaPass = new THREE.ShaderPass(THREE.FXAAShader);
 
-        pass2.threshold = 0.25;
+        pass2.threshold = 0.67;
         // pass2.exposure = 0.8;
         pass2.strength = 1;
         pass2.radius = 0.64;
@@ -201,14 +205,14 @@
             'negz.jpg'
           ], function (cubeTexture) {
             systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
-            systemLightProbe.intensity = 1
+            systemLightProbe.intensity = 2.3
           });
 
         this.lightProbe = systemLightProbe;
 
         gui.add(this.lightProbe, "intensity", 0, 10)
 
-        this.lightProbe.intensity = 1.15
+        this.lightProbe.intensity = 2.3
         this.composer = composer;
         this.t = 0;
         this.dt = 0;
