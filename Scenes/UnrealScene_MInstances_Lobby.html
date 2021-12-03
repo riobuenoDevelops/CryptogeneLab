@@ -22,17 +22,21 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/postprocessing/UnrealBloomPass.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/libs/dat.gui.min.js"></script>
+  <script src="https://unpkg.com/aframe-cubemap-component@2.1.1/dist/aframe-cubemap-component.min.js"></script>
 
 </head>
 
 <body>
-  <a-scene set-renderer>
+  <a-scene renderer="antialias: true;
+                    colorManagement: true;
+                    sortObjects: false;">
     <a-assets>
       <!-- <a-asset-item id="01" src="../Assets/lab2/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
       <!-- <a-asset-item id="01" src="../Assets/lab4/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
       <a-asset-item id="01" src="../Assets/Lobby/Web_Lobby.gltf"></a-asset-item>
       <a-asset-item id="02" src="../Assets/Monitors/Monitors.gltf"></a-asset-item>
-      
+      <a-asset-item id="03" src="../Assets/Furniture/Furniture.gltf"></a-asset-item>
+      <a-asset-item id="04" src="../Assets/Sofa/Sofa.gltf"></a-asset-item>
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
       <!-- <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"> -->
@@ -71,7 +75,7 @@
     <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
 
     <a-entity rotation="0 180 0" position="-1 5 -10.22">
-      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:100" position="0 0 0"
+      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:700" position="0 0 0"
         rotation="0 0 0"></a-entity>
     </a-entity>
     <a-entity id="labModel" position="-3 3 -4" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
@@ -82,7 +86,18 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    
+    <a-entity id="Furniture" position="-1.2 3 -11" rotation="0 270 0" gltf-model="#03" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="Sofa01" position="2.5 3 -9" rotation="0 270 0" scale="1.5 1.5 1.5" gltf-model="#04" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="Sofa02" position="-5 3 -9" rotation="0 90 0" scale="1.5 1.5 1.5"gltf-model="#04" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
     </a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
@@ -128,8 +143,9 @@
     AFRAME.registerComponent('set-renderer', {
       // ...
       init: function () {
-        this.el.renderer.physicallyCorrectLights = true;
+        this.el.renderer.physicallyCorrectLights = false;
         this.el.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.el.renderer.colorManagement = true;
       }
     })
   </script>
