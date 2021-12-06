@@ -12,6 +12,14 @@
   <script src="../js/obj-lerp.component.js"></script>
   <script src="../js/lerp.js"></script>
 
+
+  <!--------------->
+  <!-- new utils -->
+  <!--------------->
+
+  <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-rounded@1.0.3/lib/rounded.min.js"></script>
+
 </head>
 
 <body>
@@ -46,14 +54,55 @@
       <a-entity hand-controls="hand:left"></a-entity>
       <a-entity hand-controls="hand:right"></a-entity>
     </a-entity>
-    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder" position=" 0 2.5 -8.140"></a-entity>
+    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder"
+      position=" 0 2.5 -8.140"></a-entity>
     <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
     <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity>
 
 
+    <!--------------->
+    <!-- new utils -->
+    <!--------------->
+    <a-rounded id="card" rounded="height: 0.5" position="-1.66803 3.962 -1"
+      material="color:#ff00cc; flatShading: false;src:./descarga.jpg" height="1" radius="0.05">
+      <a-entity id="chart" position="0.14314 0.363 -0.035"
+        charts="type: pie; dataPoints: ./js/dataOg.json; pie_radius: 0.1;" rotation="90 0 0" scale="1 0.1 1"></a-entity>
+      <a-entity position="0.845 0.363 0.026" geometry="primitive:circle;radius:0.110"
+        material="src:https://dummyimage.com/250x250.png/5fa2dd/ffffff"></a-entity>
+<a-entity text="value:Monster #0001"></a-entity>
+
+      <a-entity id="text1" scale="0.5 0.5 0.5" position="0.13459 0.18274 0" text="value:HP;align:right">
+        <a-octahedron rotation="90 0 0" material="color:#264653" scale="0.05 0.05 0.051">
+          </a-octahedron>
+      </a-entity>
+      <a-entity id="text2" scale="0.5 0.5 0.5" position="0.13273 0.1158 0" text="value:Attack;align:right">
+        <a-octahedron rotation="90 0 0" material="color:#2a9d8f" scale="0.05 0.05 0.051">
+          </a-octahedron>
+      </a-entity>
+      <a-entity id="text3" scale="0.5 0.5 0.5" position="0.13273 0.05071 0" text="value:Defense;align:right">
+        <a-octahedron rotation="90 0 0" material="color:green" scale="0.05 0.05 0.051">
+          </a-octahedron>
+      </a-entity>
+      <a-entity id="text4" scale="0.5 0.5 0.5" position="0.59763 0.18274 0" text="value:Speed;align:right">
+        <a-octahedron rotation="90 0 0" material="color:#e9c460" scale="0.05 0.05 0.051">
+          </a-octahedron>
+      </a-entity>
+      <a-entity id="text5" scale="0.5 0.5 0.5" position="0.59763 0.12138 0" text="value:Special;align:right">
+        <a-octahedron rotation="90 0 0" material="color:#f4a200" scale="0.05 0.05 0.051">
+          </a-octahedron>
+      </a-entity>
+      <a-entity id="text6" scale="0.5 0.5 0.5" position="0.60135 0.05257 0" text="value:Lucky;align:right">
+        <a-octahedron rotation="90 0 0" material="color:#4CC3D9" scale="0.05 0.05 0.051">
+          </a-octahedron>
+      </a-entity>
+
+    </a-rounded>
+
+
+
     <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity>
     <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
-    <a-entity id="model03"  gltf-model="#03" position="1 0.9 0"></a-entity>
+    <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
     <a-entity id="model04" gltf-model="#04" position="1.5 0.9 0"></a-entity>
     <a-entity id="model05" gltf-model="#05" position="2 0.9 0"></a-entity>
     <a-entity id="model06" rotation="0 90 0" gltf-model="#06" position="-5.29673 2.34194 0.58127"></a-entity>
@@ -67,32 +116,32 @@
     </a-entity>
     <a-entity id="fillLight" light="type: directional; color: #efe; intensity:0.2" position="0.363 0.036 -0.004">
     </a-entity>
-    
-    <a-entity id="e-1" rotation="0 -90 0" position="0 4 0" >
+
+    <a-entity id="e-1" rotation="0 -90 0" position="0 4 0">
       <a-plane id="p-1" levitate="speed:0.001;offset:0.1" src="https://via.placeholder.com/500/FFff00">
 
       </a-plane>
     </a-entity>
 
-    <a-entity id="e-2" rotation="0 -90 0" position="0 4 2" >
+    <a-entity id="e-2" rotation="0 -90 0" position="0 4 2">
       <a-plane id="p-2" levitate="speed:0.0012;offset:0.3" src="https://via.placeholder.com/500/FF0055">
 
       </a-plane>
     </a-entity>
 
-    <a-entity id="e-3" rotation="0 -90 0" position="0 4 4" >
+    <a-entity id="e-3" rotation="0 -90 0" position="0 4 4">
       <a-plane id="p-3" levitate="speed:0.0013;offset:0.5" src="https://via.placeholder.com/500/FF0000">
 
       </a-plane>
     </a-entity>
 
-    <a-entity id="e-4" rotation="0 -90 0" position="0 4 6" >
+    <a-entity id="e-4" rotation="0 -90 0" position="0 4 6">
       <a-plane id="p-4" levitate="speed:0.0014;offset:0.7" src="https://via.placeholder.com/500/00ff00">
 
       </a-plane>
     </a-entity>
 
- 
+
 
     <a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
       material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
@@ -107,26 +156,26 @@
 </body>
 <script>
 
- 
-  
+
+
   AFRAME.registerComponent('levitate', {
-    schema: {  
-    speed: { default: 0.5 },
-    offset:{ default: 1},
-   },
+    schema: {
+      speed: { default: 0.5 },
+      offset: { default: 1 },
+    },
 
     init: function () {
       let self = this
       let data = this.data
-      this.initPos= this.el.getAttribute("position").y
-      this.topPos=  this.initPos+ data.offset
-      this.bottomPos= this.initPos-   data.offset
+      this.initPos = this.el.getAttribute("position").y
+      this.topPos = this.initPos + data.offset
+      this.bottomPos = this.initPos - data.offset
 
 
       console.log("init", this.initPos)
-      console.log("topPos",  this.topPos)
-      console.log("bottomPos",  this.bottomPos)
-      
+      console.log("topPos", this.topPos)
+      console.log("bottomPos", this.bottomPos)
+
 
     },
     update: function () {
@@ -134,29 +183,58 @@
     },
 
     tick: function (time, dt) {
-        // console.log("sine Wave", Math.sin(time*0.001))
+      // console.log("sine Wave", Math.sin(time*0.001))
 
       let position = this.el.getAttribute("position")
-      // curScroll.y = lerp(curScroll.y, this.scrollY, (1 - Math.exp(- 0.005 * dt)))
-      // this.el.setAttribute("position", curScroll)
-      // if (curScroll.y > 3) {
-        position.y = lerp(this.bottomPos, this.topPos, (Math.sin(time*this.data.speed)))
-        console.log("pos y", position.y)
-      //   this.el.setAttribute("position", curScroll)
-      // }
 
+      position.y = lerp(this.bottomPos, this.topPos, (Math.sin(time * this.data.speed)))
 
-      // if (curScroll.y < 0.2) {
-      //   this.scrollY = lerp(curScroll.y, 0.2, (1 - Math.exp(- 0.02 * dt)))
-      //   this.el.setAttribute("position", curScroll)
-      // }
 
 
     }
   });
 
 
+
 </script>
 
+<script>
+
+  let myJson;
+  fetch("./js/data.json").then(
+    function (u) { return u.json(); }
+  ).then(
+    function (json) {
+      ojectsResult = JSON.parse(JSON.stringify(json));
+      var delayInMilliseconds = 3000; //1 second
+      myJson = [...ojectsResult]
+      setTimeout(function () {
+        //your code to be executed after 1 second
+
+      }, delayInMilliseconds);
+    }
+  )
+</script>
+
+<script>
+  let iterator = 1;
+  let entities = myJson.length
+
+  myJson.forEach(element => {
+    let card = document.createElement("a-rounded");
+    card.setAttribute("id", `card${i}`)
+    card.setAttribute("rounded", "height:0.5")
+    card.setAttribute("material","src:../descarga.jpg")
+    card.setAttribute("radius","0.05")
+    card.setAttribute("position","0 0 0")
+
+    let chart
+
+
+    iterator += 1
+  });
+
+
+</script>
 
 </html>
