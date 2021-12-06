@@ -37,7 +37,13 @@
       <a-asset-item id="02" src="../Assets/Monitors/Monitors.gltf"></a-asset-item>
       <a-asset-item id="03" src="../Assets/Furniture/Furniture.gltf"></a-asset-item>
       <a-asset-item id="04" src="../Assets/Sofa/Sofa.gltf"></a-asset-item>
-      <video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>
+      <a-asset-item id="05" src="../Assets/Lobby/SM_LabDoor03.gltf"></a-asset-item>
+      <a-asset-item id="06" src="../Assets/Panel_Log/Panel_Log.gltf"></a-asset-item>
+      <a-asset-item id="07" src="../Assets/L_Assets_01/L_Assets_01.gltf"></a-asset-item>
+      <a-asset-item id="08" src="../Assets/Hologram/CG_Logo_3D_Icon.gltf"></a-asset-item>
+      <a-asset-item id="09" src="../Assets/Hologram/SM_Lamp_A.gltf"></a-asset-item>
+      <a-asset-item id="10" src="../Assets/Device_01/SM_ScientificDevice01.gltf"></a-asset-item>
+       <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
       <!-- <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"> -->
@@ -76,10 +82,26 @@
     <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
 
     <a-entity rotation="0 180 0" position="-1 5 -10.22">
-      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:700" position="0 0 0"
+      <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:700" position="0 0 1"
         rotation="0 0 0"></a-entity>
     </a-entity>
     <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door01" position="-1.28 3.09 -1.2" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door02" position="-1.28 3.09 -1.2" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door03" position="-1.28 3.09 19.8" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door04" position="-1.28 3.09 19.8" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -99,6 +121,26 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
+    <a-entity id="panel_log" position="2.2 3 -1.6" rotation="0 -90 0" gltf-model="#06" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="L_Assets_01" position="-10 3 -2.9" rotation="0 -90 0" gltf-model="#07" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="h_icon" position="-1.18 4.45 -9.1" rotation="90 0 0" scale="1.5 1.5 1.5" gltf-model="#08" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="h_base" position="-1.18 3.4 -9.1" rotation="0 0 0" scale="3 2.5 3" gltf-model="#09" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="device_01" position="-4.82 3.05 -2.06" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#10" cube-map="path: ../Assets/CubeMap3/;
+    extension: jpg;
+    reflectivity: 1;">
+</a-entity>
    <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;"></a-entity>
