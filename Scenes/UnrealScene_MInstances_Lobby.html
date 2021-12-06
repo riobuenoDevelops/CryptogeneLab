@@ -33,10 +33,11 @@
     <a-assets>
       <!-- <a-asset-item id="01" src="../Assets/lab2/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
       <!-- <a-asset-item id="01" src="../Assets/lab4/RoomBaking/Room_Baking.gltf"></a-asset-item> -->
-      <a-asset-item id="01" src="../Assets/Lobby/Web_Lobby.gltf"></a-asset-item>
+      <a-asset-item id="01" src="../Assets/Lobby/Lobby.gltf"></a-asset-item>
       <a-asset-item id="02" src="../Assets/Monitors/Monitors.gltf"></a-asset-item>
       <a-asset-item id="03" src="../Assets/Furniture/Furniture.gltf"></a-asset-item>
       <a-asset-item id="04" src="../Assets/Sofa/Sofa.gltf"></a-asset-item>
+      <video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
       <!-- <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"> -->
@@ -78,7 +79,7 @@
       <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:700" position="0 0 0"
         rotation="0 0 0"></a-entity>
     </a-entity>
-    <a-entity id="labModel" position="-3 3 -4" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -98,6 +99,15 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
+   <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;"></a-entity>
+
+    <a-video src="#video01" width="5.6" height="3.160" position="-1.01 4.88 -12.01"></a-video>
+
+     <a-entity id="TestSphere" geometry="primitive: sphere" position="-1.01 4.88 -8.7" material="color: #fff; roughness: 0; metalness: 0.5" envMap="path: ../Assets/CubeMap2/;
+                  extension: jpg;
+                  reflectivity: 1;"></a-entity>  -->            
     </a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
@@ -125,7 +135,7 @@
       position="0.363 0.036 -0.004">
     </a-entity>
     
-    <a-entity id="aux_2" light="type: ambient; intensity: 0.19; distance: 50; decay: 2; color:#691b9e"
+    <a-entity id="aux_2" light="type: ambient; intensity: 0.1; distance: 50; decay: 2; color:#691b9e"
       position="-2.32 6.07 4"></a-entity>
 
 
@@ -194,10 +204,10 @@
         pass2.radius = 0.64;
 
         const gui = new dat.GUI()
-        gui.add(pass2, "threshold", 0, 76)
+        gui.add(pass2, "threshold", 0, 68)
         // gui.add( pass2, "exposure", 0, 1)
-        gui.add(pass2, "strength", 0, 8)
-        gui.add(pass2, "radius", 0, 5)
+        gui.add(pass2, "strength", 0, 9)
+        gui.add(pass2, "radius", 0, 6)
 
 
         // pass2.threshold = 0.15;
@@ -221,14 +231,14 @@
             'negz.jpg'
           ], function (cubeTexture) {
             systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
-            systemLightProbe.intensity = 2.3
+            systemLightProbe.intensity = 1.1
           });
 
         this.lightProbe = systemLightProbe;
 
         gui.add(this.lightProbe, "intensity", 0, 10)
 
-        this.lightProbe.intensity = 2.3
+        this.lightProbe.intensity = 1.1
         this.composer = composer;
         this.t = 0;
         this.dt = 0;
