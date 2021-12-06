@@ -23,11 +23,15 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/lights/LightProbeGenerator.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/libs/dat.gui.min.js"></script>
   <script src="https://unpkg.com/aframe-cubemap-component@2.1.1/dist/aframe-cubemap-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/renderers/CSS3DRenderer.js"></script>
+
 
 </head>
 
 <body>
-  <a-scene renderer="antialias: true;
+  <div id="container"></div>
+
+  <a-scene set-video renderer="antialias: true;
                     colorManagement: true;
                     sortObjects: false;">
     <a-assets>
@@ -43,7 +47,10 @@
       <a-asset-item id="08" src="../Assets/Hologram/CG_Logo_3D_Icon.gltf"></a-asset-item>
       <a-asset-item id="09" src="../Assets/Hologram/SM_Lamp_A.gltf"></a-asset-item>
       <a-asset-item id="10" src="../Assets/Device_01/SM_ScientificDevice01.gltf"></a-asset-item>
-       <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
+      <video id="videoTst" autoplay loop="true" src="1.mp4"></video>
+
+
+      <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
       <!-- <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"> -->
@@ -117,7 +124,7 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="Sofa02" position="-5 3 -9" rotation="0 90 0" scale="1.5 1.5 1.5"gltf-model="#04" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="Sofa02" position="-5 3 -9" rotation="0 90 0" scale="1.5 1.5 1.5" gltf-model="#04" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -137,19 +144,21 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="device_01" position="-4.82 3.05 -2.06" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#10" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="device_01" position="-4.82 3.05 -2.06" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#10"
+      cube-map="path: ../Assets/CubeMap3/;
     extension: jpg;
     reflectivity: 1;">
-</a-entity>
-   <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
+    </a-entity>
+    <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01"
+      material="src:https://archive.org/download/ElephantsDream/ed_hd.ogv" envMap="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;"></a-entity>
 
-    <a-video src="#video01" width="5.6" height="3.160" position="-1.01 4.88 -12.01"></a-video>
+    <!--  <a-video src="#video01" width="5.6" height="3.160" position="-1.01 4.88 -12.01"></a-video>
 
      <a-entity id="TestSphere" geometry="primitive: sphere" position="-1.01 4.88 -8.7" material="color: #fff; roughness: 0; metalness: 0.5" envMap="path: ../Assets/CubeMap2/;
                   extension: jpg;
-                  reflectivity: 1;"></a-entity>  -->            
+                  reflectivity: 1;"></a-entity>  -->
     </a-entity>
     <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
     <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
@@ -176,7 +185,7 @@
       light="type: directional; color: #90e0ef; intensity: 0.0; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
       position="0.363 0.036 -0.004">
     </a-entity>
-    
+
     <a-entity id="aux_2" light="type: ambient; intensity: 0.1; distance: 50; decay: 2; color:#691b9e"
       position="-2.32 6.07 4"></a-entity>
 
@@ -187,9 +196,8 @@
     <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
   </a-scene>
-
-
-
+ 
+ 
 
   <script>
     AFRAME.registerComponent('set-renderer', {
@@ -326,3 +334,4 @@
 </body>
 
 </html>
+

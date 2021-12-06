@@ -11,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <script src="../js/obj-lerp.component.js"></script>
   <script src="../js/lerp.js"></script>
+  <script src="../js/vertical-movement.component.js"></script>
+
 
 
   <!--------------->
@@ -48,7 +50,7 @@
 
     </a-assets>
     <a-entity id="rig" movement-controls position="0 1 0.6">
-      <a-entity id="player" camera="fov:80" look-controls wasd-controls="acceleration:50" position="0 3.05 0.6">
+      <a-entity id="player" vertical-movement camera="fov:80" look-controls wasd-controls="acceleration:50" position="0 3.05 0.6">
 
       </a-entity>
       <a-entity hand-controls="hand:left"></a-entity>
@@ -172,9 +174,7 @@
       this.bottomPos = this.initPos - data.offset
 
 
-      console.log("init", this.initPos)
-      console.log("topPos", this.topPos)
-      console.log("bottomPos", this.bottomPos)
+ 
 
 
     },
@@ -215,7 +215,7 @@
     }
   )
 </script>
-
+<!-- 
 <script>
   let iterator = 1;
   let entities = myJson.length
@@ -235,6 +235,74 @@
   });
 
 
-</script>
+</script> -->
+
+
+<script>
+  
+ AFRAME.registerComponent('vertical-movement', {
+    schema: {
+      speed: { default: 0.1 },
+      offset: { default: 1 },
+    },
+
+    init: function () {
+
+      this.playerPos = [this.el.getAttribute("position").y]
+      this.rise = 0
+      this.down = 0
+      console.log("position",this.playerPos)
+      this.onKeyUp = this.onKeyUp.bind(this);
+
+      document.addEventListener("keypress", this.onKeyUp);
+//       document.addEventListener("keydown", this.onKeydown);
+
+
+
+
+    },
+    update: function () {
+
+    },
+
+    tick: function (time, dt) {
+      let playerPosition = document.getElementById("player").getAttribute("position")
+ 
+      playerPosition.y = lerp(playerPosition.y, this.playerPos, (1 - Math.exp(- 0.005 * dt)))
+       
+
+ 
+
+    },
+
+    onKeyUp: function (e) {
+       if (101 === e.keyCode) {
+         this.playerPos +=this.data.speed
+ 
+
+      }
+      if (113 === e.keyCode) {
+           this.playerPos -=this.data.speed
+ 
+      }
+    },
+
+    onKeydown: function (e) {
+      if (81 === e.keyCode) {
+        this.rise = 0
+        this.down = 0
+
+      }
+      if (80 === e.keyCode) {
+        this.rise = 0
+        this.down = 0
+      }
+    }
+
+
+  });
+
+
+  </script>
 
 </html>
