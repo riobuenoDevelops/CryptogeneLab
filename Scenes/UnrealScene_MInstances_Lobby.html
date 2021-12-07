@@ -43,6 +43,9 @@
       <a-asset-item id="08" src="../Assets/Hologram/CG_Logo_3D_Icon.gltf"></a-asset-item>
       <a-asset-item id="09" src="../Assets/Hologram/SM_Lamp_A.gltf"></a-asset-item>
       <a-asset-item id="10" src="../Assets/Device_01/SM_ScientificDevice01.gltf"></a-asset-item>
+      <a-asset-item id="11" src="../Assets/Lamp/SM_Lamp01.gltf"></a-asset-item>
+      <a-asset-item id="12" src="../Assets/Lobby/Elevator.gltf"></a-asset-item>
+      <a-asset-item id="13" src="../Assets/NuclearRoom/Lobby_NuclearRoom_Blocking.gltf"></a-asset-item>
        <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
@@ -85,7 +88,7 @@
       <a-entity id="player" camera="fov:90" look-controls wasd-controls="acceleration:700" position="0 0 1"
         rotation="0 0 0"></a-entity>
     </a-entity>
-    <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/Lobby_CubeMap/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -105,7 +108,23 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="Monitors" position="-1.2 3.3 -5" rotation="0 270 0" gltf-model="#02" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="door05" position="-1.28 3.09 20.140" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door06" position="-1.28 3.09 20.140" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door07" position="-1.28 3.09 24.05" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door08" position="-1.28 3.09 24.05" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="Monitors" position="-1.2 3.3 -5" rotation="0 270 0" gltf-model="#02" cube-map="path: ../Assets/Lobby_CubeMap/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -138,9 +157,25 @@
                   reflectivity: 1;">
     </a-entity>
     <a-entity id="device_01" position="-4.82 3.05 -2.06" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#10" cube-map="path: ../Assets/CubeMap3/;
-    extension: jpg;
-    reflectivity: 1;">
-</a-entity>
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="Lamp_01" position="-3.35 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="Lamp_02" position="0.650 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="Elevator" position="-1.350 3 22.1" rotation="0 -90 0" gltf-model="#12" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="N_Room" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#13" cube-map="path: ../Assets/Lobby_CubeMap/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
    <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;"></a-entity>
