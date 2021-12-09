@@ -26,17 +26,16 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/libs/dat.gui.min.js"></script>
   <script src="https://unpkg.com/aframe-cubemap-component@2.1.1/dist/aframe-cubemap-component.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.125.1/examples/js/renderers/CSS3DRenderer.js"></script>
-  <script
-    src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
+  <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
   <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
-
-
+  
+  
 </head>
 
 <body>
   <div id="container"></div>
 
-  <a-scene physics="debug:true" inspector-plugin-recast set-video renderer="antialias: true;
+  <a-scene inspector-plugin-recast set-video renderer="antialias: true;
                     colorManagement: true;
                     sortObjects: false;">
     <a-assets>
@@ -53,7 +52,7 @@
       <a-asset-item id="09" src="../Assets/Hologram/SM_Lamp_A.gltf"></a-asset-item>
       <a-asset-item id="10" src="../Assets/Device_01/SM_ScientificDevice01.gltf"></a-asset-item>
       <video id="videoTst" autoplay loop="true" src="1.mp4"></video>
-      <a-asset-item id="nav-Mesh-GLTF" src="../Assets/tst/nav-mesh-loby.glb"></a-asset-item>
+      <a-asset-item id="nav-Mesh-GLTF" src="../Assets/tst/nav-mesh.gltf"></a-asset-item>
 
 
 
@@ -61,7 +60,7 @@
       <a-asset-item id="11" src="../Assets/Lamp/SM_Lamp01.gltf"></a-asset-item>
       <a-asset-item id="12" src="../Assets/Lobby/Elevator.gltf"></a-asset-item>
       <a-asset-item id="13" src="../Assets/NuclearRoom/Lobby_NuclearRoom_Blocking.gltf"></a-asset-item>
-      <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
+       <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
       <!-- <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous"> -->
@@ -98,20 +97,18 @@
     <!-- <a-entity id="cubeMap" geometry="primitive: box; width:100; height:100; depth:100; side:double" material="envMap: #sky; roughness: 0"></a-entity> -->
 
     <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
+    
+  
 
-    <a-box id="boxCollider" tst  dynamic-body="mass:0.0" position="-1.550 5 9" material="color:purple" width="3" height="1" depth="1"></a-box>
-
-
-    <a-entity id="rig" tst position="0 4 -3" position="0 0 0" movement-controls="constrainToNavMesh: true; speed:0.3">
-        <a-box id="boxbox" dynamic-body="mass:0.0" height="2" material="color:red"></a-box>
-       <a-entity id="player" camera="fov:90" look-controls position="0 2 -2" rotation="0 0 0"></a-entity>
+    <a-entity id="rig" position="0 5 -3" movement-controls="constrainToNavMesh: true; speed:0.1">
+      <a-entity id="player" camera="fov:90" look-controls    
+      rotation="0 0 0"></a-entity>
     </a-entity>
-
+    
     <!-- <a-entity id="nav_mesh" material="color:green" geometry="primitive: plane; height: 10.470; width: 11.370;" position="-1.450 5.0 -6.680" rotation="-90 0 0" static-body nav-mesh></a-entity> -->
-
+    
+    <a-entity id="nav_mesh" gltf-model="#nav-Mesh-GLTF" material="color:#fff"  position="-1.450 0 -6.680" rotation="0 0 0" static-body nav-mesh></a-entity>
     <!-- <a-entity id="nav_mesh" material="color:green" geometry="primitive: plane; height: 6.000; width: 2;" position="0.920 5.0 -8.610" rotation="-90 0 0" static-body ></a-entity> -->
-    <a-entity id="nav_mesh" gltf-model="#nav-Mesh-GLTF" material="color:#fff" position="-3 4 -0.18" rotation="0 270 0"
-      static-body nav-mesh></a-entity>
 
     <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/Lobby_CubeMap/;
                   extension: jpg;
@@ -181,18 +178,15 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="device_01" position="-4.82 3.05 -2.06" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#10"
-      cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="device_01" position="-4.82 3.05 -2.06" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#10" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="Lamp_01" position="-3.35 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11"
-      cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="Lamp_01" position="-3.35 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="Lamp_02" position="0.650 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11"
-      cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="Lamp_02" position="0.650 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -204,12 +198,12 @@
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-
+    
     <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01"
-      material="src:3.mp4" envMap="path: ../Assets/CubeMap3/;
+    material="src:3.mp4" envMap="path: ../Assets/CubeMap3/;
                 extension: jpg;
                 reflectivity: 1;"></a-entity>
-    <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
+   <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;"></a-entity>
 
@@ -255,44 +249,9 @@
     <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
   </a-scene>
-
-  <script>
-
-
-
-    AFRAME.registerComponent('tst', {
-      schema: {
-        speed: { default: 0.1 },
-        offset: { default: 1 },
-      },
-
-      init: function () {
-
-        var playerEl = document.getElementById("rig")
-        playerEl.addEventListener('collide', function (e) {
-          console.log('Player has collided with body #' + e.detail.body.id);
-
-          e.detail.target.el;  // Original entity (playerEl).
-          e.detail.body.el;    // Other entity, which playerEl touched.
-          e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
-          e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
-        });
-
-      },
-
-
-
-
-
-
-    });
-
-
-
-  </script>
   <script>
     AFRAME.registerComponent('set-renderer', {
-
+      
       init: function () {
         this.el.renderer.physicallyCorrectLights = false;
         this.el.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -425,3 +384,4 @@
 </body>
 
 </html>
+
