@@ -36,7 +36,7 @@
 <body>
   <div id="container"></div>
 
-  <a-scene physics="debug:true" inspector-plugin-recast set-video renderer="antialias: true;
+  <a-scene physics="debug:false" inspector-plugin-recast set-video renderer="antialias: true;
                     colorManagement: true;
                     sortObjects: false;">
     <a-assets>
@@ -53,7 +53,7 @@
       <a-asset-item id="09" src="../Assets/Hologram/SM_Lamp_A.gltf"></a-asset-item>
       <a-asset-item id="10" src="../Assets/Device_01/SM_ScientificDevice01.gltf"></a-asset-item>
       <video id="videoTst" autoplay loop="true" src="1.mp4"></video>
-      <a-asset-item id="nav-Mesh-GLTF" src="../Assets/tst/nav-mesh-loby.glb"></a-asset-item>
+      <a-asset-item id="nav-Mesh-GLTF" src="../Assets/navmesh/nav-mesh-loby1.glb"></a-asset-item>
 
 
 
@@ -104,13 +104,13 @@
 
     <a-entity id="rig" tst position="0 4 -3" position="0 0 0" movement-controls="constrainToNavMesh: true; speed:0.3">
         <a-box id="boxbox" dynamic-body="mass:0.0" height="2" material="color:red"></a-box>
-       <a-entity id="player" camera="fov:90" look-controls position="0 2 -2" rotation="0 0 0"></a-entity>
+       <a-entity id="player" camera="fov:90" look-controls position="0 1 0 " rotation="0 0 0"></a-entity>
     </a-entity>
 
     <!-- <a-entity id="nav_mesh" material="color:green" geometry="primitive: plane; height: 10.470; width: 11.370;" position="-1.450 5.0 -6.680" rotation="-90 0 0" static-body nav-mesh></a-entity> -->
 
     <!-- <a-entity id="nav_mesh" material="color:green" geometry="primitive: plane; height: 6.000; width: 2;" position="0.920 5.0 -8.610" rotation="-90 0 0" static-body ></a-entity> -->
-    <a-entity id="nav_mesh" gltf-model="#nav-Mesh-GLTF" material="color:#fff" position="-3 4 -0.18" rotation="0 270 0"
+    <a-entity id="nav_mesh" visible="true" gltf-model="#nav-Mesh-GLTF" material="color:#fff" position="-3 4 -0.18" rotation="0 270 0"
       static-body nav-mesh></a-entity>
 
     <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/Lobby_CubeMap/;
