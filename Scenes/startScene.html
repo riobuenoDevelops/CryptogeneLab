@@ -1,0 +1,118 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>CryptoGene</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/aframe-svgfile-component@1.1.2/dist/aframe-svgfile-component.min.js"></script>
+
+	<style>
+		body {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		a-scene {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		}
+
+		.start-button {
+			z-index: 1;
+		}
+	</style>
+</head>
+<body>
+<a-scene wasd-controls="enabled: false" embedded vr-mode-ui="enabled: false">
+	<a-assets>
+
+		<img id="sky" src="../Assets/sky.png" crossorigin="anonymous" />
+		<img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
+		<a-asset-item id="logo" src="../Assets/CG_NoIcon.gltf"></a-asset-item>
+		<a-asset-item id="dna" src="../Assets/Hologram/CG_Logo_3D_Icon.gltf"></a-asset-item>
+
+
+	</a-assets>
+
+	<a-entity
+		position="0.05 5.5 -3.1"
+		gltf-model="#dna"
+		center-gltf-mesh
+		rotation="90 0 0"
+		scale="4 3 4"
+		animation="property: rotation; to: 90 -180 0; easing: easeOutCirc; dur: 2000;"
+		change-start-animation
+	></a-entity>
+	<a-entity
+		position="0.05 1.6 -3.1"
+		gltf-model="#dna"
+		center-gltf-mesh
+		rotation="90 0 0"
+		scale="4 3 4"
+		animation="property: rotation; to: 90 -180 0; easing: easeOutCirc; dur: 2000;"
+		change-start-animation
+	></a-entity>
+	<a-entity
+		position="0.05 -2.32 -3.1"
+		gltf-model="#dna"
+		center-gltf-mesh
+		rotation="90 0 0"
+		scale="4 3 4"
+		animation="property: rotation; to: 90 -180 0; easing: easeOutCirc; dur: 2000;"
+		change-start-animation
+	></a-entity>
+	<a-entity
+		geometry="primitive: sphere; radius: 2"
+		material="shader: flat; transparent: true; visible: false"
+		position="-0.1 1.6 -3"
+		rotation="0 180 0"
+		animation="property: rotation; to: 0 0 0; dur: 2000; easing: easeOutCirc;"
+	>
+		<a-entity
+			geometry="primitive: plane; width: 4; height: 1.5"
+			material="shader: flat; transparent: true; side: double; src: ../Assets/CG_Logo_.png;"
+			position="0 0 1.2"
+		></a-entity>
+	</a-entity>
+
+	<a-sky color="black"></a-sky>
+</a-scene>
+</div>
+<button class="btn btn-primary px-1 start-button position-absolute bottom-0 start-50 translate-middle-x mb-4">Start Game</button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script>
+	AFRAME.registerComponent('change-start-animation', {
+		init: function () {
+			const el = this.el;
+
+			if(!el.hasLoaded) {
+				el.addEventListener('loaded', this.init.bind(this));
+				return;
+			}
+
+			el.addEventListener('animationcomplete', function () {
+				el.setAttribute('animation', 'property: rotation; to: 90 180 0; easing: linear; dur: 5000; loop: true;');
+			})
+		}
+	})
+	AFRAME.registerComponent('center-gltf-mesh', {
+		init: function () {
+			const el = this.el;
+
+			el.addEventListener('model-loaded', function () {
+				const mesh = el.getObject3D('mesh');
+				console.log(mesh);
+				mesh.children[0].geometry.center();
+			})
+		}
+	})
+</script>
+</body>
+</html>

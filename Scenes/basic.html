@@ -1,219 +1,215 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>CryptoGenLab</title>
-  <meta name="description" content="Web-XR-Gallery">
+	<meta charset="utf-8">
+	<title>CryptoGenLab</title>
+	<meta name="description" content="Web-XR-Gallery">
 
-  <!-- <script src="super/build.js"></script> -->
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  <script src="../js/obj-lerp.component.js"></script>
-  <script src="../js/lerp.js"></script>
-  <script src="../js/vertical-movement.component.js"></script>
+	<!-- <script src="super/build.js"></script> -->
+	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@gauthier-th/bad-tv-shader@1.0.0/BadTVShader.min.js"></script>
+	<script src="../js/obj-lerp.component.js"></script>
+	<script src="../js/lerp.js"></script>
+	<script src="../js/vertical-movement.component.js"></script>
 
 
+	<!--------------->
+	<!-- new utils -->
+	<!--------------->
 
-  <!--------------->
-  <!-- new utils -->
-  <!--------------->
-
-  <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe-rounded@1.0.3/lib/rounded.min.js"></script>
+	<script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/aframe-rounded@1.0.3/lib/rounded.min.js"></script>
 
 </head>
 
 <body>
-  <a-scene>
-    <a-assets>
+<a-scene>
+	<a-assets>
 
-      <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" />
-      <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
-      <!-- <a-asset-item id="01" src="assets/Minimal_Default.gltf"></a-asset-item> -->
-      <a-asset-item id="01" src="../Assets/Container01/Container01.gltf"></a-asset-item>
-      <a-asset-item id="02" src="../Assets/Container02/Container02.gltf"></a-asset-item>
-      <a-asset-item id="03" src="../Assets/Container03/Container03.gltf"></a-asset-item>
-      <a-asset-item id="04" src="../Assets/Monitor/Monitor.gltf"></a-asset-item>
-      <a-asset-item id="05" src="../Assets/Wall/Wall.gltf"></a-asset-item>
-      <a-asset-item id="06" src="../Assets/Balance/Balance.gltf"></a-asset-item>
-      <a-asset-item id="07" src="../Assets/Monitor01/Monitor01.gltf"></a-asset-item>
-      <a-asset-item id="08" src="../Assets/Device/Device.gltf"></a-asset-item>
-      <a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
-      <a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
+		<img id="sky" src="../Assets/sky.png" crossorigin="anonymous"/>
+		<img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
+		<!-- <a-asset-item id="01" src="assets/Minimal_Default.gltf"></a-asset-item> -->
+		<a-asset-item id="01" src="../Assets/Container01/Container01.gltf"></a-asset-item>
+		<a-asset-item id="02" src="../Assets/Container02/Container02.gltf"></a-asset-item>
+		<a-asset-item id="03" src="../Assets/Container03/Container03.gltf"></a-asset-item>
+		<a-asset-item id="04" src="../Assets/Monitor/Monitor.gltf"></a-asset-item>
+		<a-asset-item id="05" src="../Assets/Wall/Wall.gltf"></a-asset-item>
+		<a-asset-item id="06" src="../Assets/Balance/Balance.gltf"></a-asset-item>
+		<a-asset-item id="07" src="../Assets/Monitor01/Monitor01.gltf"></a-asset-item>
+		<a-asset-item id="08" src="../Assets/Device/Device.gltf"></a-asset-item>
+		<a-asset-item id="09" src="../Assets/Monitor02/Monitor02.gltf"></a-asset-item>
+		<a-asset-item id="10" src="../Assets/Tube/Tube.gltf"></a-asset-item>
 
-      <a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
-      <a-asset-item id="cylinder" src="../Assets/Incubator2/IncubatorWater.gltf"></a-asset-item>
-      <a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item>
+		<a-asset-item id="Incubator" src="../Assets/Incubator2/Incubator1.gltf"></a-asset-item>
+		<a-asset-item id="cylinder" src="../Assets/Incubator2/IncubatorWater.gltf"></a-asset-item>
+		<a-asset-item id="IncubatorHelix" src="../Assets/Incubator2/IncubatorHelix.gltf"></a-asset-item>
+		<a-asset-item id="eye-bot" src="../Assets/Robot/scene.gltf"></a-asset-item>
+	</a-assets>
+	<a-entity id="rig" movement-controls position="0 1 0.6">
+		<a-entity id="player" vertical-movement camera="fov:80" look-controls wasd-controls="acceleration:50"
+			position="0 3.05 0.6">
 
-
-
-    </a-assets>
-    <a-entity id="rig" movement-controls position="0 1 0.6">
-      <a-entity id="player" vertical-movement camera="fov:80" look-controls wasd-controls="acceleration:50" position="0 3.05 0.6">
-
-      </a-entity>
-      <a-entity hand-controls="hand:left"></a-entity>
-      <a-entity hand-controls="hand:right"></a-entity>
-    </a-entity>
-    <a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder"
-      position=" 0 2.5 -8.140"></a-entity>
-    <a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
-    <a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity>
-
-
-    <!--------------->
-    <!-- new utils -->
-    <!--------------->
-    <a-rounded id="card" rounded="height: 0.5" position="-1.66803 3.962 -1"
-      material="color:#ff00cc; flatShading: false;src:./descarga.jpg" height="1" radius="0.05">
-      <a-entity id="chart" position="0.14314 0.363 -0.035"
-        charts="type: pie; dataPoints: ./js/dataOg.json; pie_radius: 0.1;" rotation="90 0 0" scale="1 0.1 1"></a-entity>
-      <a-entity position="0.845 0.363 0.026" geometry="primitive:circle;radius:0.110"
-        material="src:https://dummyimage.com/250x250.png/5fa2dd/ffffff"></a-entity>
-<a-entity text="value:Monster #0001"></a-entity>
-
-      <a-entity id="text1" scale="0.5 0.5 0.5" position="0.13459 0.18274 0" text="value:HP;align:right">
-        <a-octahedron rotation="90 0 0" material="color:#264653" scale="0.05 0.05 0.051">
-          </a-octahedron>
-      </a-entity>
-      <a-entity id="text2" scale="0.5 0.5 0.5" position="0.13273 0.1158 0" text="value:Attack;align:right">
-        <a-octahedron rotation="90 0 0" material="color:#2a9d8f" scale="0.05 0.05 0.051">
-          </a-octahedron>
-      </a-entity>
-      <a-entity id="text3" scale="0.5 0.5 0.5" position="0.13273 0.05071 0" text="value:Defense;align:right">
-        <a-octahedron rotation="90 0 0" material="color:green" scale="0.05 0.05 0.051">
-          </a-octahedron>
-      </a-entity>
-      <a-entity id="text4" scale="0.5 0.5 0.5" position="0.59763 0.18274 0" text="value:Speed;align:right">
-        <a-octahedron rotation="90 0 0" material="color:#e9c460" scale="0.05 0.05 0.051">
-          </a-octahedron>
-      </a-entity>
-      <a-entity id="text5" scale="0.5 0.5 0.5" position="0.59763 0.12138 0" text="value:Special;align:right">
-        <a-octahedron rotation="90 0 0" material="color:#f4a200" scale="0.05 0.05 0.051">
-          </a-octahedron>
-      </a-entity>
-      <a-entity id="text6" scale="0.5 0.5 0.5" position="0.60135 0.05257 0" text="value:Lucky;align:right">
-        <a-octahedron rotation="90 0 0" material="color:#4CC3D9" scale="0.05 0.05 0.051">
-          </a-octahedron>
-      </a-entity>
-
-    </a-rounded>
+		</a-entity>
+		<a-entity hand-controls="hand:left"></a-entity>
+		<a-entity hand-controls="hand:right"></a-entity>
+	</a-entity>
+	<a-entity id="e-cylinder" cylinder-height="minHeight :0.25; maxHeight:1.2" rotation="0 90 0" gltf-model="#cylinder"
+		position=" 0 2.5 -8.140"></a-entity>
+	<a-entity id="e-Incubator" rotation="0 90 0" gltf-model="#Incubator" position="0 2.5 -8.140"></a-entity>
+	<a-entity id="e-IncubatorHelix" rotation="0 90 0" gltf-model="#IncubatorHelix" position="0 2.5 -8.140"></a-entity>
 
 
+	<!--------------->
+	<!-- new utils -->
+	<!--------------->
+	<a-rounded id="card" rounded="height: 0.5" position="-1.66803 3.962 -1"
+		material="color:#ff00cc; flatShading: false;src:./descarga.jpg" height="1" radius="0.05">
+		<a-entity id="chart" position="0.14314 0.363 -0.035"
+			charts="type: pie; dataPoints: ./js/dataOg.json; pie_radius: 0.1;" rotation="90 0 0" scale="1 0.1 1"></a-entity>
+		<a-entity position="0.845 0.363 0.026" geometry="primitive:circle;radius:0.110"
+			material="src:https://dummyimage.com/250x250.png/5fa2dd/ffffff"></a-entity>
+		<a-entity text="value:Monster #0001"></a-entity>
 
-    <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity>
-    <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
-    <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
-    <a-entity id="model04" gltf-model="#04" position="1.5 0.9 0"></a-entity>
-    <a-entity id="model05" gltf-model="#05" position="2 0.9 0"></a-entity>
-    <a-entity id="model06" rotation="0 90 0" gltf-model="#06" position="-5.29673 2.34194 0.58127"></a-entity>
-    <a-entity id="model07" rotation="0 -90 0" gltf-model="#07" position="-5.90105 3.00126 2.66504"></a-entity>
-    <a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
-    <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
-    <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity>
+		<a-entity id="text1" scale="0.5 0.5 0.5" position="0.13459 0.18274 0" text="value:HP;align:right">
+			<a-octahedron rotation="90 0 0" material="color:#264653" scale="0.05 0.05 0.051">
+			</a-octahedron>
+		</a-entity>
+		<a-entity id="text2" scale="0.5 0.5 0.5" position="0.13273 0.1158 0" text="value:Attack;align:right">
+			<a-octahedron rotation="90 0 0" material="color:#2a9d8f" scale="0.05 0.05 0.051">
+			</a-octahedron>
+		</a-entity>
+		<a-entity id="text3" scale="0.5 0.5 0.5" position="0.13273 0.05071 0" text="value:Defense;align:right">
+			<a-octahedron rotation="90 0 0" material="color:green" scale="0.05 0.05 0.051">
+			</a-octahedron>
+		</a-entity>
+		<a-entity id="text4" scale="0.5 0.5 0.5" position="0.59763 0.18274 0" text="value:Speed;align:right">
+			<a-octahedron rotation="90 0 0" material="color:#e9c460" scale="0.05 0.05 0.051">
+			</a-octahedron>
+		</a-entity>
+		<a-entity id="text5" scale="0.5 0.5 0.5" position="0.59763 0.12138 0" text="value:Special;align:right">
+			<a-octahedron rotation="90 0 0" material="color:#f4a200" scale="0.05 0.05 0.051">
+			</a-octahedron>
+		</a-entity>
+		<a-entity id="text6" scale="0.5 0.5 0.5" position="0.60135 0.05257 0" text="value:Lucky;align:right">
+			<a-octahedron rotation="90 0 0" material="color:#4CC3D9" scale="0.05 0.05 0.051">
+			</a-octahedron>
+		</a-entity>
 
-    <a-entity id="ambientLight" light="type: ambient; color: #CCC"></a-entity>
-    <a-entity id="keyLight" light="type: directional; color: #fef; intensity: 1" position="0.55717 2.48596 1.39464">
-    </a-entity>
-    <a-entity id="fillLight" light="type: directional; color: #efe; intensity:0.2" position="0.363 0.036 -0.004">
-    </a-entity>
-
-    <a-entity id="e-1" rotation="0 -90 0" position="0 4 0">
-      <a-plane id="p-1" levitate="speed:0.001;offset:0.1" src="https://via.placeholder.com/500/FFff00">
-
-      </a-plane>
-    </a-entity>
-
-    <a-entity id="e-2" rotation="0 -90 0" position="0 4 2">
-      <a-plane id="p-2" levitate="speed:0.0012;offset:0.3" src="https://via.placeholder.com/500/FF0055">
-
-      </a-plane>
-    </a-entity>
-
-    <a-entity id="e-3" rotation="0 -90 0" position="0 4 4">
-      <a-plane id="p-3" levitate="speed:0.0013;offset:0.5" src="https://via.placeholder.com/500/FF0000">
-
-      </a-plane>
-    </a-entity>
-
-    <a-entity id="e-4" rotation="0 -90 0" position="0 4 6">
-      <a-plane id="p-4" levitate="speed:0.0014;offset:0.7" src="https://via.placeholder.com/500/00ff00">
-
-      </a-plane>
-    </a-entity>
+	</a-rounded>
 
 
+	<a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity>
+	<a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
+	<a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
+	<a-entity id="model04" gltf-model="#04" position="1.5 0.9 0"></a-entity>
+	<a-entity id="model05" gltf-model="#05" position="2 0.9 0"></a-entity>
+	<a-entity id="model06" rotation="0 90 0" gltf-model="#06" position="-5.29673 2.34194 0.58127"></a-entity>
+	<a-entity id="model07" rotation="0 -90 0" gltf-model="#07" position="-5.90105 3.00126 2.66504"></a-entity>
+	<a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
+	<a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
+	<a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity>
 
-    <a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
-      material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
-    </a-entity>
+	<a-entity id="ambientLight" light="type: ambient; color: #CCC"></a-entity>
+	<a-entity id="keyLight" light="type: directional; color: #fef; intensity: 1" position="0.55717 2.48596 1.39464">
+	</a-entity>
+	<a-entity id="fillLight" light="type: directional; color: #efe; intensity:0.2" position="0.363 0.036 -0.004">
+	</a-entity>
+
+	<a-entity id="e-1" rotation="0 -90 0" position="0 4 0">
+		<a-plane id="p-1" levitate="speed:0.001;offset:0.1" src="https://via.placeholder.com/500/FFff00">
+
+		</a-plane>
+	</a-entity>
+
+	<a-entity id="e-2" rotation="0 -90 0" position="0 4 2">
+		<a-plane id="p-2" levitate="speed:0.0012;offset:0.3" src="https://via.placeholder.com/500/FF0055">
+
+		</a-plane>
+	</a-entity>
+
+	<a-entity id="e-3" rotation="0 -90 0" position="0 4 4">
+		<a-plane id="p-3" levitate="speed:0.0013;offset:0.5" src="https://via.placeholder.com/500/FF0000">
+
+		</a-plane>
+	</a-entity>
+
+	<a-entity id="e-4" rotation="0 -90 0" position="0 4 6">
+		<a-plane id="p-4" levitate="speed:0.0014;offset:0.7" src="https://via.placeholder.com/500/00ff00">
+
+		</a-plane>
+	</a-entity>
 
 
-    <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
-    <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+	<a-entity gltf-model="#eye-bot" position="0 3 -3" levitate="speed: 0.003; offset: 0.01" scale="0.3 0.3 0.3"></a-entity>
 
-  </a-scene>
+	<a-entity position="0 1 0" geometry="primitive: plane; width: 50; height: 50;" rotation="-90 0 0"
+		material="src: #grid; repeat: 50 50; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;">
+	</a-entity>
+
+
+	<!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
+	<!--<a-entity position="0 3 -1" holo-effect></a-entity>-->
+	<!--<a-entity holo-effect></a-entity>-->
+	<a-sky src="#sky" rotation="0 -90 0"></a-sky>
+
+</a-scene>
 
 </body>
 <script>
 
 
+	AFRAME.registerComponent('levitate', {
+		schema: {
+			speed: { default: 0.5 },
+			offset: { default: 1 },
+		},
 
-  AFRAME.registerComponent('levitate', {
-    schema: {
-      speed: { default: 0.5 },
-      offset: { default: 1 },
-    },
-
-    init: function () {
-      let self = this
-      let data = this.data
-      this.initPos = this.el.getAttribute("position").y
-      this.topPos = this.initPos + data.offset
-      this.bottomPos = this.initPos - data.offset
-
-
- 
+		init: function () {
+			let self = this
+			let data = this.data
+			this.initPos = this.el.getAttribute("position").y
+			this.topPos = this.initPos + data.offset
+			this.bottomPos = this.initPos - data.offset
 
 
-    },
-    update: function () {
+		},
+		update: function () {
 
-    },
+		},
 
-    tick: function (time, dt) {
-      // console.log("sine Wave", Math.sin(time*0.001))
+		tick: function (time, dt) {
+			// console.log("sine Wave", Math.sin(time*0.001))
 
-      let position = this.el.getAttribute("position")
+			let position = this.el.getAttribute("position")
 
-      position.y = lerp(this.bottomPos, this.topPos, (Math.sin(time * this.data.speed)))
+			position.y = lerp(this.bottomPos, this.topPos, (Math.sin(time * this.data.speed)))
 
 
-
-    }
-  });
-
+		}
+	});
 
 
 </script>
-
 <script>
 
-  let myJson;
-  fetch("./js/data.json").then(
-    function (u) { return u.json(); }
-  ).then(
-    function (json) {
-      ojectsResult = JSON.parse(JSON.stringify(json));
-      var delayInMilliseconds = 3000; //1 second
-      myJson = [...ojectsResult]
-      setTimeout(function () {
-        //your code to be executed after 1 second
+	let myJson;
+	fetch("./js/data.json").then(
+		function (u) {
+			return u.json();
+		}
+	).then(
+		function (json) {
+			ojectsResult = JSON.parse(JSON.stringify(json));
+			var delayInMilliseconds = 3000; //1 second
+			myJson = [...ojectsResult]
+			setTimeout(function () {
+				//your code to be executed after 1 second
 
-      }, delayInMilliseconds);
-    }
-  )
+			}, delayInMilliseconds);
+		}
+	)
 </script>
 <!-- 
 <script>
@@ -236,73 +232,423 @@
 
 
 </script> -->
-
-
 <script>
-  
- AFRAME.registerComponent('vertical-movement', {
-    schema: {
-      speed: { default: 0.1 },
-      offset: { default: 1 },
-    },
 
-    init: function () {
+	AFRAME.registerComponent('vertical-movement', {
+		schema: {
+			speed: { default: 0.1 },
+			offset: { default: 1 },
+		},
 
-      this.playerPos = [this.el.getAttribute("position").y]
-      this.rise = 0
-      this.down = 0
-      console.log("position",this.playerPos)
-      this.onKeyUp = this.onKeyUp.bind(this);
+		init: function () {
 
-      document.addEventListener("keypress", this.onKeyUp);
+			this.playerPos = [this.el.getAttribute("position").y]
+			this.rise = 0
+			this.down = 0
+			console.log("position", this.playerPos)
+			this.onKeyUp = this.onKeyUp.bind(this);
+
+			document.addEventListener("keypress", this.onKeyUp);
 //       document.addEventListener("keydown", this.onKeydown);
 
 
+		},
+		update: function () {
+
+		},
+
+		tick: function (time, dt) {
+			let playerPosition = document.getElementById("player").getAttribute("position")
+
+			playerPosition.y = lerp(playerPosition.y, this.playerPos, (1 - Math.exp(-0.005 * dt)))
 
 
-    },
-    update: function () {
+		},
 
-    },
-
-    tick: function (time, dt) {
-      let playerPosition = document.getElementById("player").getAttribute("position")
- 
-      playerPosition.y = lerp(playerPosition.y, this.playerPos, (1 - Math.exp(- 0.005 * dt)))
-       
-
- 
-
-    },
-
-    onKeyUp: function (e) {
-       if (101 === e.keyCode) {
-         this.playerPos +=this.data.speed
- 
-
-      }
-      if (113 === e.keyCode) {
-           this.playerPos -=this.data.speed
- 
-      }
-    },
-
-    onKeydown: function (e) {
-      if (81 === e.keyCode) {
-        this.rise = 0
-        this.down = 0
-
-      }
-      if (80 === e.keyCode) {
-        this.rise = 0
-        this.down = 0
-      }
-    }
+		onKeyUp: function (e) {
+			if (101 === e.keyCode) {
+				this.playerPos += this.data.speed
 
 
-  });
+			}
+			if (113 === e.keyCode) {
+				this.playerPos -= this.data.speed
+
+			}
+		},
+
+		onKeydown: function (e) {
+			if (81 === e.keyCode) {
+				this.rise = 0
+				this.down = 0
+
+			}
+			if (80 === e.keyCode) {
+				this.rise = 0
+				this.down = 0
+			}
+		}
 
 
-  </script>
+	});
 
+
+</script>
+<!--<script>
+	AFRAME.registerComponent('animate-text', {
+		schema: {
+			text: { type: 'string', default: '' }
+		},
+		init: function () {
+			const data = this.data;
+			const el = this.el;
+			let i = 0;
+
+			if (!el.hasLoaded) {
+				el.addEventListener('loaded', this.init.bind(this));
+				return;
+			}
+
+			window.setTimeout(function () {
+				const timer = window.setInterval(function () {
+					if (i < data.text.length) {
+						el.setAttribute('text', `value: ${data.text.substr(0, i+1)}`);
+						i++;
+					} else {
+						clearInterval(timer);
+					}
+				}, 100);
+			}, 2000);
+		}
+	})
+</script>-->
+<!--
+<script type="module">
+	import { EffectComposer } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/EffectComposer.js';
+	import { ShaderPass } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/ShaderPass.js';
+	import { RenderPass } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/RenderPass.js';
+	import { UnrealBloomPass } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/postprocessing/UnrealBloomPass.js';
+	import { HorizontalBlurShader } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/shaders/HorizontalBlurShader.js';
+	import { VerticalBlurShader } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/shaders/VerticalBlurShader.js';
+	import { FilmShader } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/shaders/FilmShader.js';
+	import { FXAAShader } from 'https://cdn.jsdelivr.net/npm/three@0.125.1/examples/jsm/shaders/FXAAShader.js';
+
+	AFRAME.registerSystem('holo-effect', {
+		init: function () {
+			const sceneEl = this.sceneEl;
+
+			THREE.VolumetericLightShader = {
+				uniforms: {
+					tDiffuse: { value: null },
+					lightPosition: { value: new THREE.Vector2(0.5, 0.5) },
+					exposure: { value: 1 },
+					decay: { value: 1 },
+					density: { value: 6 },
+					weight: { value: 0.57 },
+					samples: { value: 30 }
+				},
+
+				vertexShader: [
+					"varying vec2 vUv;",
+					"void main() {",
+					"vUv = uv;",
+					"gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);",
+					"}"
+				].join("\n"),
+
+				fragmentShader: [
+					"varying vec2 vUv;",
+					"uniform sampler2D tDiffuse;",
+					"uniform vec2 lightPosition;",
+					"uniform float exposure;",
+					"uniform float decay;",
+					"uniform float density;",
+					"uniform float weight;",
+					"uniform int samples;",
+					"const int MAX_SAMPLES = 100;",
+					"void main()",
+					"{",
+					"vec2 texCoord = vUv;",
+					"vec2 deltaTextCoord = texCoord - lightPosition;",
+					"deltaTextCoord *= 1.0 / float(samples) * density;",
+					"vec4 color = texture2D(tDiffuse, texCoord);",
+					"float illuminationDecay = 1.0;",
+					"for(int i=0; i < MAX_SAMPLES; i++)",
+					"{",
+					"if(i == samples) {",
+					"break;",
+					"}",
+					"texCoord += deltaTextCoord;",
+					"vec4 samplec = texture2D(tDiffuse, texCoord);",
+					"samplec *= illuminationDecay * weight;",
+					"color += samplec;",
+					"illuminationDecay *= decay;",
+					"}",
+					"gl_FragColor = color * exposure;",
+					"}"
+				].join("\n")
+			};
+			THREE.AdditiveBlendingShader = {
+				uniforms: {
+					tDiffuse: { value: null },
+					tAdd: { value: null }
+				},
+
+				vertexShader: [
+					"varying vec2 vUv;",
+					"void main() {",
+					"vUv = uv;",
+					"gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);",
+					"}"
+				].join("\n"),
+
+				fragmentShader: [
+					"uniform sampler2D tDiffuse;",
+					"uniform sampler2D tAdd;",
+					"varying vec2 vUv;",
+					"void main() {",
+					"vec4 color = texture2D(tDiffuse, vUv);",
+					"vec4 add = texture2D(tAdd, vUv);",
+					"gl_FragColor = color + add;",
+					"}"
+				].join("\n")
+			};
+			THREE.PassThroughShader = {
+				uniforms: {
+					tDiffuse: { value: null }
+				},
+
+				vertexShader: [
+					"varying vec2 vUv;",
+					"void main() {",
+					"vUv = uv;",
+					"gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);",
+					"}"
+				].join("\n"),
+
+				fragmentShader: [
+					"uniform sampler2D tDiffuse;",
+					"varying vec2 vUv;",
+					"void main() {",
+					"gl_FragColor = texture2D(tDiffuse, vec2(vUv.x, vUv.y));",
+					"}"
+				].join("\n")
+			};
+
+			if (!sceneEl.hasLoaded){
+				sceneEl.addEventListener('loaded', this.init.bind(this));
+				return;
+			}
+
+			const scene = sceneEl.object3D;
+			const renderer = sceneEl.renderer;
+			const camera = sceneEl.camera;
+
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+			const DEFAULT_LAYER = 1;
+			const OCCLUSION_LAYER = 2;
+			const renderScale = .25;
+
+			let composer,
+				filmPass,
+				badTVPass,
+				bloomPass,
+				occlusionComposer,
+				occRenderTarget,
+				vlShaderUniforms;
+
+			renderer.antialias = false;
+			renderer.autoClear = false;
+
+			occRenderTarget = new THREE.WebGLRenderTarget(width * renderScale, height * renderScale);
+
+			// Blur passes
+			const hBlur = new ShaderPass(HorizontalBlurShader);
+			const vBlur = new ShaderPass(VerticalBlurShader);
+			const bluriness = 7;
+			hBlur.uniforms.h.value = bluriness / width;
+			vBlur.uniforms.v.value = bluriness / height;
+
+			// Bad TV Pass
+			badTVPass = new ShaderPass(THREE.BadTVShader);
+			badTVPass.uniforms.distortion.value = 0;
+			badTVPass.uniforms.distortion2.value = 0;
+			badTVPass.uniforms.speed.value = 0;
+			badTVPass.uniforms.rollSpeed.value = 0;
+
+			// Volumetric Light Pass
+			const vlPass = new ShaderPass(THREE.VolumetericLightShader);
+			vlShaderUniforms = vlPass.uniforms;
+			vlPass.needsSwap = false;
+
+			// Occlusion Composer
+			occlusionComposer = new EffectComposer(renderer, occRenderTarget);
+			occlusionComposer.addPass(new RenderPass(scene, camera));
+			occlusionComposer.addPass(hBlur);
+			occlusionComposer.addPass(vBlur);
+			occlusionComposer.addPass(hBlur);
+			occlusionComposer.addPass(vBlur);
+			occlusionComposer.addPass(hBlur);
+			occlusionComposer.addPass(badTVPass);
+			occlusionComposer.addPass(vlPass);
+
+			// Bloom pass
+			bloomPass = new UnrealBloomPass(width / height, 0.5, .8, .3);
+
+			// Film pass
+			filmPass = new ShaderPass(FilmShader);
+			filmPass.uniforms.sCount.value = 1200;
+			filmPass.uniforms.grayscale.value = false;
+			filmPass.uniforms.sIntensity.value = 1.5;
+			filmPass.uniforms.nIntensity.value = 0.2;
+
+			// Blend occRenderTarget into main render target
+			const blendPass = new ShaderPass(THREE.AdditiveBlendingShader);
+			blendPass.uniforms.tAdd.value = occRenderTarget.texture;
+			blendPass.renderToScreen = true;
+
+			// Main Composer
+			composer = new EffectComposer(renderer);
+			composer.addPass(new RenderPass(scene, camera));
+			composer.addPass(bloomPass);
+			composer.addPass(badTVPass);
+			composer.addPass(filmPass);
+			composer.addPass(blendPass);
+
+			this.composer = composer;
+			this.occlusionComposer = occlusionComposer;
+			this.filmPass = filmPass;
+			this.badTVPass = badTVPass;
+			this.DEFAULT_EFFECT_LAYER = DEFAULT_LAYER;
+			this.OCCLUSION_LAYER = OCCLUSION_LAYER;
+/*
+			this.defaultComposer = new EffectComposer(renderer);
+			this.defaultComposer.addPass(new RenderPass(scene, camera));*/
+
+			this.dt = 0;
+			this.t = 0;
+
+			this.bind();
+		},
+		tick: function (t, dt) {
+			this.t = t;
+			this.dt = dt;
+		},
+		bind: function () {
+			const sceneEl = this.sceneEl;
+			const scene = sceneEl.objec3D;
+			const renderer = sceneEl.renderer;
+			const camera = sceneEl.camera;
+			const render = renderer.render;
+			const system = this;
+			let isDigest = false;
+
+			renderer.render = function () {
+				if (isDigest) {
+					render.apply(this, arguments);
+				} else {
+					isDigest = true;
+
+					system.filmPass.uniforms.time.value += system.dt;
+					system.badTVPass.uniforms.time.value += 0.01;
+
+					//.defaultComposer.render();
+
+					camera.layers.set(2);
+					system.occlusionComposer.render();
+
+					camera.layers.set(1);
+					system.composer.render();
+
+					camera.layers.set(0);
+					isDigest = false;
+				}
+			}
+		},
+		getImageTexture: function (image, density = 1) {
+			const canvas = document.createElement('canvas');
+			const ctx = canvas.getContext('2d');
+			const { width, height } = image;
+
+			canvas.setAttribute('width', width * density);
+			canvas.setAttribute('height', height * density);
+			canvas.style.width = `${width}px`;
+			canvas.style.height = `${height}px`;
+
+			ctx.drawImage(image, 0, 0, width * density, height * density);
+
+			return canvas;
+		}
+	});
+
+	AFRAME.registerComponent('holo-effect', {
+		schema: {
+			lightColor: { type: 'color', default: '#0099ff' }
+		},
+		init: function () {
+			const el = this.el;
+			const data = this.data;
+			const system = this.system;
+			const scene = el.sceneEl.object3D;
+
+			if (!el.hasLoaded) {
+				el.addEventListener('loaded', this.init.bind(this));
+				return;
+			}
+
+			let itemMesh,
+				occMesh;
+
+			const getImageTexture = (image, density = 1) => {
+				const canvas = document.createElement('canvas');
+				const ctx = canvas.getContext('2d');
+				const { width, height } = image;
+
+				canvas.setAttribute('width', width * density);
+				canvas.setAttribute('height', height * density);
+				canvas.style.width = `${width}px`;
+				canvas.style.height = `${height}px`;
+
+				ctx.drawImage(image, 0, 0, width * density, height * density);
+
+				return canvas;
+			};
+
+			const itemGeo = new THREE.PlaneGeometry(9, 2.1);
+			const itemMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.7 });
+
+			const img = new Image();
+			img.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/13307/blaster.png';
+			img.crossOrigin = 'Anonymous';
+
+			img.onload = function () {
+				const itemTexture = new THREE.Texture(
+					getImageTexture(img),
+					null,
+					THREE.ClampToEdgeWrapping,
+					THREE.ClampToEdgeWrapping
+				);
+
+				itemTexture.needsUpdate = true;
+				itemMaterial.map = itemTexture;
+
+				itemMesh = new THREE.Mesh(itemGeo, itemMaterial);
+				itemMesh.layers.set(1);
+				itemMesh.position.y = 3;
+				scene.add(itemMesh);
+
+				const occItemMaterial = new THREE.MeshBasicMaterial({ color: data.lightColor });
+				occItemMaterial.map = itemTexture;
+				occMesh = new THREE.Mesh(itemGeo, occItemMaterial);
+				occMesh.layers.set(2);
+				occMesh.position.y = 3;
+				scene.add(occMesh);
+			}
+			const newMesh = new THREE.Mesh(new THREE.PlaneGeometry(2,2), new THREE.MeshBasicMaterial({ color: 'red' }));
+			newMesh.layers.set(3);
+			scene.add(newMesh);
+		},
+	})
+</script>-->
 </html>
