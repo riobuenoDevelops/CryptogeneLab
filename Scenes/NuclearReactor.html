@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>CryptoGenLab Nuclear Room</title>
+  <title>Nuclear Reactor</title>
   <meta name="description" content="Web-XR-Gallery">
 
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
@@ -54,15 +54,13 @@
       <a-asset-item id="08" src="../Assets/Hologram/CG_Logo_3D_Icon.gltf"></a-asset-item>
       <a-asset-item id="09" src="../Assets/Hologram/SM_Lamp_A.gltf"></a-asset-item>
       <a-asset-item id="10" src="../Assets/Device_01/SM_ScientificDevice01.gltf"></a-asset-item>
-      <video id="videoTst" autoplay loop="true" src="1.mp4"></video>
-      <a-asset-item id="nav-mesh" src="../Assets/navmesh/nav-mesh-loby.glb"></a-asset-item>
-
-
-
-      <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
       <a-asset-item id="11" src="../Assets/Lamp/SM_Lamp01.gltf"></a-asset-item>
       <a-asset-item id="12" src="../Assets/Lobby/Elevator.gltf"></a-asset-item>
-      <a-asset-item id="13" src="../Assets/NuclearRoom/Lobby_NuclearRoom_Blocking.gltf"></a-asset-item>
+      <a-asset-item id="13" src="../Assets/Lobby/NuclearRoom.gltf"></a-asset-item>
+      <a-asset-item id="15" src="../Assets/NuclearReactor/NuclearReactor_2.gltf"></a-asset-item>
+      <a-asset-item id="16" src="../Assets/Lobby/NuclearReactor_Base.gltf"></a-asset-item>
+      <!-- <video id="videoTst" autoplay loop="true" src="1.mp4"></video> -->
+      <!-- <a-asset-item id="nav-Mesh-GLTF" src="../Assets/tst/nav-mesh-loby.glb"></a-asset-item> -->
       <!--<video id="video01" autoplay loop="true" src="https://www.youtube.com/watch?v=OdfPxhtKszw&ab_channel=Sortium"></video>-->
 
       <!-- <img id="sky" src="../Assets/sky.png" crossorigin="anonymous" /> -->
@@ -101,14 +99,14 @@
 
     <!-- <a-entity cubemap="folder: ../Assets/CubeMap2/"></a-entity> -->
 
-    <a-entity id="nav-mesh" gltf-model="#nav-mesh" position="-3 3 -0.18" rotation="0 270 0" nav-mesh></a-entity>
 
-    <a-entity id="rig" tst position="-1.3 2.75 -3.5" position="0 0 0"  movement-controls="constrainToNavMesh: true; controls: checkpoint, gamepad, trackpad, keyboard, touch; speed:0.5">
-      <a-entity id="player" camera="fov:90" look-controls vertical-movement="speed:1" position="0 2 0" rotation="0 0 0"></a-entity>
+
+    <a-entity id="rig" tst position="-1.3 2.75 18.6" position="0 0 0"  rotation="0 180 0" movement-controls="constrainToNavMesh: true; speed:0.8">
+      <a-entity id="player" camera="fov:90" look-controls vertical-movement="speed:1" position="0 2 -2" rotation="0 0 0"></a-entity>
     </a-entity>
     
 
-    <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/Lobby_CubeMap/;
+  <!--  <a-entity id="labModel" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#01" cube-map="path: ../Assets/Lobby_CubeMap/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -126,25 +124,41 @@
     </a-entity>
     <a-entity id="door04" position="-1.28 3.09 19.8" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
-                  reflectivity: 1;">
+                  reflectivity: 1;">-->
     </a-entity>
-    <a-entity id="door05" position="-1.28 3.09 20.140" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="door01" position="-1.28 3.09 20.140" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="door06" position="-1.28 3.09 20.140" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="door02" position="-1.28 3.09 20.140" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;"> 
+    </a-entity>
+    <a-entity id="door03" position="-1.160 3.09 24.05" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="door07" position="-1.160 3.09 24.05" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="door04" position="-1.160 3.09 24.05" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="door08" position="-1.160 3.09 24.05" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+    <a-entity id="door05" position="-1.160 -207.180 24.460" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <a-entity id="Monitors" position="-1.2 3.3 -5" rotation="0 270 0" gltf-model="#02" cube-map="path: ../Assets/Lobby_CubeMap/;
+    <a-entity id="door06" position="-1.160 -207.180 24.460" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door07" position="-1.240 -207.230 158.530" rotation="0 -90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+    <a-entity id="door08" position="-1.240 -207.230 158.530" rotation="0 90 0" gltf-model="#05" cube-map="path: ../Assets/CubeMap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
+   <!-- <a-entity id="Monitors" position="-1.2 3.3 -5" rotation="0 270 0" gltf-model="#02" cube-map="path: ../Assets/Lobby_CubeMap/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
@@ -189,65 +203,32 @@
     <a-entity id="Lamp_02" position="0.650 6.850 -4.24" rotation="0 180 0" scale="0.58 0.58 0.58" gltf-model="#11"
       cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
-                  reflectivity: 1;">
+                  reflectivity: 1;"> -->
     </a-entity>
     <a-entity id="Elevator" position="-1.200 3 22.1" rotation="0 -90 0" gltf-model="#12" cube-map="path: ../Assets/CubeMap3/;
                   extension: jpg;
                   reflectivity: 1;">
     </a-entity>
-    <!-- <a-entity id="N_Room" position="-3 3 -0.18" rotation="0 270 0" gltf-model="#13" cube-map="path: ../Assets/Lobby_CubeMap/;
+    <a-entity id="N_Room" position="-1.31 -337.47 69.89" rotation="0 270 0" gltf-model="#13" cube-map="path: ../Assets/Cubemap3/;
                   extension: jpg;
                   reflectivity: 1;">
-    </a-entity> -->
-
-    <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01"
-      material="src:3.mp4" envMap="path: ../Assets/CubeMap3/;
-                extension: jpg;
-                reflectivity: 1;"></a-entity>
-    <!-- <a-entity id="PlaneScreen" geometry="primitive: plane; height: 3.160; width: 5.6" position="-1.01 4.88 -12.01" material="src:#video01" envMap="path: ../Assets/CubeMap3/;
-                  extension: jpg;
-                  reflectivity: 1;"></a-entity>
-
-    <a-video src="#video01" width="5.6" height="3.160" position="-1.01 4.88 -12.01"></a-video>
-
-     <a-entity id="TestSphere" geometry="primitive: sphere" position="-1.01 4.88 -8.7" material="color: #fff; roughness: 0; metalness: 0.5" envMap="path: ../Assets/CubeMap2/;
-                  extension: jpg;
-                  reflectivity: 1;"></a-entity>  -->
     </a-entity>
-    <!-- <a-entity id="model01" gltf-model="#01" position="0 0.9 0"></a-entity> -->
-    <!-- <a-entity id="model02" gltf-model="#02" position="0.5 0.9 0"></a-entity>
-    <a-entity id="model03" gltf-model="#03" position="1 0.9 0"></a-entity>
-    <a-entity id="model04" gltf-model="#04" position="1.5 0.9 0"></a-entity>
-    <a-entity id="model05" gltf-model="#05" position="2 0.9 0"></a-entity>
-    <a-entity id="model06" rotation="0 90 0" gltf-model="#06" position="-5.29673 2.34194 0.58127"></a-entity>
-    <a-entity id="model07" rotation="0 -90 0" gltf-model="#07" position="-5.90105 3.00126 2.66504"></a-entity>
-    <a-entity id="model08" rotation="0 90 0" gltf-model="#08" position="-7.64113 1.1 6.34224"></a-entity>
-    <a-entity id="model09" rotation="0 -90 0" gltf-model="#09" position="-5.00163 1.1 0.73473"></a-entity>
-    <a-entity id="model10" rotation="0 90 0" gltf-model="#10" position="-5.27919 2.3397 0.03302"></a-entity> -->
-
-
-    <!-- <a-entity visible="false" id="ambientLight" light="type: ambient; color: #00459E; intensity: 0.26; angle: 60"></a-entity>
-    <a-entity visible="false" id="keyLight" light="type: directional; color: #fef; intensity: 0.26" position="0.55717 2.48596 1.39464">
+    <a-entity id="N_Reactor" position="-1.370 -208.840 88.860" rotation="0 270 0" scale="2 2 2" gltf-model="#15" cube-map="path: ../Assets/Cubemap3/;
+                  extension: jpg;
+                  reflectivity: 1;">
     </a-entity>
-    <a-entity visible="false" id="fillLight"
-              light="type: directional; color: #90e0ef; intensity: 0.005; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
-              position="0.363 0.036 -0.004">
-    </a-entity> -->
+    <a-entity id="Base" position="-1.370 -208.840 88.860" rotation="0 270 0" scale="40 0.2 40" gltf-model="#16" cube-map="path: ../Assets/Lobby_CubeMap/;
+                  extension: jpg;
+                  reflectivity: 1;">
+    </a-entity>
 
+    </a-entity>
 
     <a-entity visible="false" id="fillLight"
       light="type: directional; color: #90e0ef; intensity: 0.0; castShadow: false; penumbra: 0; angle: 62.15; decay: 1; distance: 0"
       position="0.363 0.036 -0.004">
     </a-entity>
 
-    <a-entity id="aux_2" light="type: ambient; intensity: 0.1; distance: 50; decay: 2; color:#691b9e"
-      position="-2.32 6.07 4"></a-entity>
-
-
-    <!-- <a-entity id="sphere" geometry="primitive: sphere; radius: 2;" material="color: green" position="1.2 5.2 0.3"></a-entity> -->
-
-    <!-- <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity> -->
-    <!-- <a-sky src="#sky" rotation="0 -90 0"></a-sky> -->
 
   </a-scene>
 
@@ -336,14 +317,14 @@
 
         pass2.threshold = 0.75;
         // pass2.exposure = 0.8;
-        pass2.strength = 1;
+        pass2.strength = 0.6;
         pass2.radius = 0.64;
 
         const gui = new dat.GUI()
-        gui.add(pass2, "threshold", 0, 68)
+        gui.add(pass2, "threshold", 0, 2)
         // gui.add( pass2, "exposure", 0, 1)
-        gui.add(pass2, "strength", 0, 9)
-        gui.add(pass2, "radius", 0, 6)
+        gui.add(pass2, "strength", 0, 2)
+        gui.add(pass2, "radius", 0, 2)
 
 
         // pass2.threshold = 0.15;
@@ -367,14 +348,14 @@
             'negz.jpg'
           ], function (cubeTexture) {
             systemLightProbe.copy(THREE.LightProbeGenerator.fromCubeTexture(cubeTexture));
-            systemLightProbe.intensity = 1.1
+            systemLightProbe.intensity = 0.65
           });
 
         this.lightProbe = systemLightProbe;
 
         gui.add(this.lightProbe, "intensity", 0, 10)
 
-        this.lightProbe.intensity = 1.1
+        this.lightProbe.intensity = 0.65
         this.composer = composer;
         this.t = 0;
         this.dt = 0;
